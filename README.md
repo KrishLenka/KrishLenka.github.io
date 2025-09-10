@@ -1,2 +1,3 @@
 # KrishLenka.github.io
-This is my personal portfolio summarizing my experience and contact information. Thanks for stopping by.
+Welcome to my portfolio. This website summarizes my experience, interests, and contact information.
+Thanks for stopping by!
