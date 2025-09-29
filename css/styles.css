@@ -1,91 +1,364 @@
-html {
-	scroll-behavior: smooth;
-	scroll-snap-type: y mandatory;
-	scroll-padding-top: 80px;
-}
-
 body {
-	background-color: #f5f5f7;
-	color: #0a0a0a;
-	font-family: 'Montserrat', 'Helvetica Neue', 'Arial', sans-serif;
-	line-height: 1.6;
 	margin: 0;
-	padding-top: 80px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: 600;
-	margin-bottom: 1rem;
-	letter-spacing: -0.02em;
-}
-
-.title {
-	font-size: clamp(2.5rem, 8vw, 5rem);
-}
-
-h1 {
-	font-size: 3.5rem;
-}
-
-h2 {
-    font-size: 2.5rem;
-}
-
-p {
-    font-size: 1.1rem;
-    /* color: #86868b; */
-    max-width: 700px;
-}
-
-a {
-    /* color: #f5f5f7; */
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #86868b;
-}
-
-section {
+	font-family: 'Playfair Display', serif;
+	color: #ffffff;
+	background: linear-gradient(to bottom, #1f1f1f 0%, #1b1f2b 18%, #575260 100%);
 	min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 20px;
-    box-sizing: border-box;
-    text-align: center;
-    scroll-snap-align: start;
 }
-
-/* Nav bar */
-.custom-navbar {
-	background-color: #0a0a0a;
-	backdrop-filter: blur(10px);
-	padding: 1rem 2rem;
-	border-bottom: 1px solid #424245;
-	transition: background-color 0.3s ease-in-out;
-	z-index: 1100;
+  
+.no-scroll {
+	height: 100dvh;
+	overflow: hidden;
 }
+  
 
-.navbar-brand .firstname, .navbar-brand .lastname {
-	color: #f5f5f7;
+
+
+
+
+
+
+
+
+  /* =========================
+	 NAVBAR
+	 ========================= */
+  .topnav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 64px;
+	background: #1a1a1a;
+	border-bottom: 1px solid #1f1f1f;
+	transform: translateY(-100%);
+	opacity: 0;
+	transition: transform 600ms ease, opacity 600ms ease;
+	z-index: 1000;
+  }
+  .topnav.show {
+	transform: translateY(0);
+	opacity: 1;
+  }
+  
+  /* nav-inner is the main flex container; links will stay to the right */
+  .topnav .nav-inner {
+	max-width: 100%;
+	margin: 0 auto;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	flex-wrap: nowrap; /* don't wrap so links won't drop down */
+	gap: 16px;
+  }
+  
+  /* Name container - left side. Keep it inline so it does not push nav links. */
+  .name-container {
+	position: relative;
+	display: inline-block;
+	margin-right: 12px;
+	z-index: 2;
+  }
+  
+  /* Main brand/name link */
+  .name {
+	display: inline-block;
+	color: #fff;
+	text-decoration: none;
 	font-weight: 700;
-}
-
-.nav-link {
-	color: #86868b;
+	font-size: 24px;
+	transition: transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 180ms;
+	will-change: transform;
+  }
+  
+  /* TOP-NAV social icons under the name (absolute so they don't affect layout).
+	 They start hidden (translated down) and slide up into place on hover. */
+  .name-socials {
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, 18px); /* start slightly below the name */
+	display: flex;
+	gap: 10px;
+	padding: 6px 8px;
+	border-radius: 10px;
+	background: rgba(255,255,255,0.04);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 10px 30px rgba(3,7,18,0.6);
+	opacity: 0;
+	pointer-events: none;
+	transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 200ms ease;
+	transform-origin: top center;
+	z-index: 1;
+  }
+  
+  /* Individual icon links inside the popover */
+  .name-socials a {
+	display: inline-grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	color: #e6eefb;
+	text-decoration: none;
+	background: transparent;
+	transition: transform 180ms ease, box-shadow 180ms ease, color 160ms ease;
+	font-size: 18px;
+  }
+  .name-socials a:hover,
+  .name-socials a:focus {
+	background: rgba(255,255,255,0.06);
+	transform: translateY(-2px) scale(1.06);
+	box-shadow: 0 6px 18px rgba(30,60,120,0.18);
+	color: #fff;
+  }
+  
+  /* NAME hover/focus behavior: pop name forward and reveal socials */
+  .name-container:hover .name,
+  .name-container:focus-within .name {
+	transform: translateY(-2px) scale(1.06);
+	text-shadow: 0 6px 24px rgba(51,102,255,0.12);
+  }
+  
+  /* Show the socials when hovering/focusing the container */
+  .name-container:hover .name-socials,
+  .name-container:focus-within .name-socials {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translate(-50%, 0); /* slide up into place */
+  }
+  
+  /* Keep the nav links aligned right (they will not be pushed down) */
+  .topnav .links {
+	list-style: none;
+	margin: 0;
+	display: flex;
+	gap: 18px;
+	padding: 0;
+	margin-left: auto; /* ensures links go to the far right */
+	align-items: center;
+  }
+  
+  /* Link styling */
+  .topnav .links a {
+	color: #ffffff;
+	text-decoration: none;
 	font-weight: 500;
-	margin-left: 15px;
-	padding: 5px 10px;
-	border-radius: 5px;
+	padding: 6px 8px;
+	border-radius: 6px;
+	transition: color 0.25s ease, background-color 0.25s ease, transform 0.15s ease;
+  }
+  .topnav .links a:hover,
+  .topnav .links a:focus {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.06);
+	transform: translateY(-1px);
+  }
+  
+  /* Optional small icon area to the left of nav links (if needed) */
+  .topnav-socials {
+	display: flex;
+	gap: 18px;
+	margin-left: 20px;
+	font-size: 0.95rem;
+  }
+  .topnav-socials a {
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 500;
+	padding: 6px 8px;
+	border-radius: 4px;
+	font-size: 1.25rem;
 	transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-	color: #f5f5f7;
-}
-/* 
-.nav-link.active {
-	color: #;
-} */
+  }
+  .topnav-socials a:hover {
+	background: rgba(255, 255, 255, 0.08);
+	transform: scale(1.1);
+	color: #fff;
+  }
+  
+  /* =========================
+	 HOME / HERO
+	 ========================= */
+  .home-screen {
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+	position: relative;
+	overflow: hidden;
+	padding-top: 64px; /* ensure content sits nicely under the nav when it appears */
+  }
+  .home-screen::before {
+	content: "";
+	position: absolute;
+	inset: -20%;
+	background: linear-gradient(to bottom, #222222 0%, #1b1f2b 100%);
+	filter: blur(40px) saturate(115%);
+	transform: scale(1.1);
+	z-index: -1;
+  }
+  .home-wrap {
+	text-align: center;
+	padding: 0 16px;
+  }
+  
+  /* Main title line (letters forming animation kept) */
+.home-line {
+	font-size: clamp(6rem, 10vw, 9rem);
+	line-height: 1;
+	margin: 0 0 12px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: #ffffff;
+	display: inline-block;
+	opacity: 1;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+  }
+  
+  /* "Letters forming" animation */
+  @keyframes fade-in-letters {
+	0% {
+	  opacity: 0;
+	  filter: blur(8px);
+	  letter-spacing: 0.5em;
+	}
+	100% {
+	  opacity: 1;
+	  filter: blur(0);
+	  letter-spacing: 0.02em;
+	}
+  }
+  
+  /* Per-letter cinematic reveal (soft blur -> pop -> settle) */
+/* Per-letter stationary fade + sharpen (left -> right via staggered animationDelay) */
+.char {
+	display: inline-block;            /* occupies final position immediately */
+	opacity: 0;                       /* start invisible */
+	filter: blur(6px);                /* start blurred */
+	will-change: opacity, filter;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	transform: translateZ(0);         /* promote to its own layer */
+	animation-name: charFadeIn;
+	animation-duration: 1200ms;        /* adjust for speed */
+	animation-timing-function: cubic-bezier(.25,.85,.25,1);
+	animation-fill-mode: both;        /* ensure final state sticks */
+	/* animation-delay set inline by JS for each char */
+  }
+  
+  @keyframes charFadeIn {
+	0% {
+	  opacity: 0;
+	  filter: blur(6px);
+	}
+	60% {
+	  opacity: 1;
+	  filter: blur(1px);
+	}
+	100% {
+	  opacity: 1;
+	  filter: blur(0);
+	}
+  }
+  
+  /* reduced motion fallback */
+  @media (prefers-reduced-motion: reduce) {
+	.char {
+	  animation: none !important;
+	  opacity: 1 !important;
+	  filter: none !important;
+	}
+  }
+  
+  /* =========================
+	 Hero social links (center under title)
+	 ========================= */
+  .social-links {
+	margin-top: 10px;
+	display: flex;
+	gap: 20px;
+	font-size: 2rem;
+	opacity: 0;
+	transition: opacity 1s ease, transform 300ms ease;
+  }
+  .social-links a {
+	color: #e5e7eb;
+	transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .social-links a:hover {
+	color: #93c5fd;
+	transform: scale(1.15);
+  }
+  
+  /* hidden / visible utility classes */
+  .hidden {
+	opacity: 0;
+	pointer-events: none;
+  }
+  .visible {
+	opacity: 1;
+	pointer-events: auto;
+  }
+  
+  /* =========================
+	 Generic Sections
+	 ========================= */
+  .section {
+	max-width: 1200px;
+	margin: 2rem auto;
+	padding: 1.5rem;
+	text-align: left;
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	border-radius: 1rem;
+	backdrop-filter: blur(10px);
+	background: rgba(255,255,255, 0.05);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  .section h2 {
+	font-size: clamp(1.8rem, 4vw, 3rem);
+	margin-bottom: 10px;
+	margin-top: 0;
+  }
+  .section p {
+	max-width: 100%;
+	margin: 0.5rem 0;
+	color: #ffffff;
+  }
+  .section ul {
+	margin: 0.5rem 0 0.5rem 1.25rem;
+	padding: 0;
+  }
+  .section li {
+	margin-bottom: 0.3rem;
+  }
+  
+  /* =========================
+	 Responsive tweaks
+	 ========================= */
+  @media (max-width: 880px) {
+	.topnav .nav-inner {
+	  gap: 8px;
+	  padding: 0 12px;
+	}
+	.name {
+	  font-size: 20px;
+	}
+	.name-socials {
+	  right: auto;
+	  left: 50%;
+	}
+	.topnav .links {
+	  gap: 12px;
+	}
+  }
+  @media (max-width: 640px) {
+	/* keep the popover off small screens (touch-friendly alternative could be implemented) */
+	.name-socials {
+	  display: none;
+	}
+	.home-line { font-size: clamp(3rem, 12vw, 6rem); }
+  }
+  

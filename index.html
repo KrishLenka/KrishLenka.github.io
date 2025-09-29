@@ -1,96 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Krish Lenka's Portfolio</title>
-
+	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<nav class="navbar fixed-top navbar-expand-lg custom-navbar">
-		<a class="navbar-brand">
-			<span class="firstname">Krish</span>
-			<span class="lastname">Lenka</span>
-
-		</a>
-		<div class="collapse navbar-collapse">
-			<ul class="navbar-nav">
-				<a class="nav-item">
-					<a class="nav-link" href="#home">HOME</a>
-					<a class="nav-link" href="#skills">SKILLS</a>
-					<a class="nav-link" href="#about-me">ABOUT ME</a>
-					<a class="nav-link" href="#experience">EXPERIENCE</a>
-					<a class="nav-link" href="#projects">PROJECTS</a>
-					<a class="nav-link" href="#contact-me">CONTACT ME</a>
-				</li>
-			</ul>
+	<!-- Navbar -->
+	<nav id="topnav" class="topnav">
+		<div class="nav-inner">
+		  <div class="name-container">
+			<a class="name" href="#home">Krish Lenka</a>
+			<div class="name-socials">
+			  <a href="https://github.com/KrishLenka" target="_blank" aria-label="Github">
+				<i class="fab fa-github"></i>
+			  </a>
+			  <a href="https://www.linkedin.com/in/krish-lenka-4aa99a283/" target="_blank" aria-label="LinkedIn">
+				<i class="fab fa-linkedin"></i>
+			  </a>
+			</div>
+		  </div>
+	  
+		  <ul class="links">
+			<li><a href="#home">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#skills">Skills</a></li>
+			<li><a href="#experience">Experience</a></li>
+			<li><a href="#projects">Projects</a></li>
+			<li><a href="#contact">Contact</a></li>
+		  </ul>
 		</div>
 	</nav>
-
-	<section id="home">
-		<div class="container-fluid">
-				<div class="title">KRISH LENKA'S PORTFOLIO</div>
+<!-- Home screen -->
+<header id="home" class="home-screen" aria-label="Home screen">
+	<div class="home-wrap">
+		<h1 class="home-line" aria-label="home">
+			<span id="titleText" class="typed"></span>
+		</h1>
+		<div id="homeLinks" class="social-links hidden">
+			<a href="https://github.com/KrishLenka" target="_blank" aria-label = "Github">
+				<i class="fab fa-github"></i>
+			</a>
+			<a href="https://www.linkedin.com/in/krish-lenka-4aa99a283/" target="_blank" aria-label = "LinkedIn">
+				<i class="fab fa-linkedin"></i>
+			</a>
 		</div>
-	</section>
+	</div>
+</header>
 
-	<section id="about-me">
-		<div class="container">
-			<div class="col-md-5">
-				<img src="images/IMG_9493.jpg" alt="Picture of me"
-					width=15%
-					height="auto">
-					<!-- Make it circular with a border -->
-			</div>
-			<div class="col-md-6">
-				<h1 class="grad-text">ABOUT ME</h1>
-                <hr>
-                <p>Hi, I am Krish Lenka.</p>
-				<!-- Add more about me -->
-			</div>
-		</div>
+<!-- About section -->
+<main>
+	<section id="about" class="section">
+		<h2>About</h2>
+		<p>I'm a 2nd year Computer Science undergrad working at the intersection of software engineering and data.</p>
+		<ul>
+			<li>Educated <b>100+</b> students in math and computer science for 3+ years. 
+				Now developing data structures assignments for <b>3,000+</b> university students.</li>
+			<li>Built a video compression algorithm at Columbia University achieving 80%+ compression with near-lossless quality</li>
+			<li>Now developing Adopet, a pet adoption app with verified listings and matching features, already piloted with rescue organizations.</li>
+		</ul>
 	</section>
-
-	<section id="skills">
-		<div class="container">
-			<h1 class="title">SKILLS</h1>
+	
+	<section id="skills" class="section">
+		<h2>Skills</h2>
+		<p><b>Languages:</b> Java, Python, SQL, R, HTML/CSS, JavaScript, C</p>
+		<p><b>Technologies/Frameworks:</b> React, Node.js, Express, PostgreSQL, MySQL, pandas, NumPy, Matplotlib, PyTorch, scikit-learn, Flutter, OpenCV</p>
+		<p><b>Tools:</b> AWS, Jupyter, Google Colab, Excel, Tableau, Figma, Github</p>
+		<p><b>Awards/Certs:</b> AWS AI and Cloud Practitioner, Dean's List</p>
+	</section>
+	
+	<section id="experience" class="section">
+		<h2>Experience</h2>
+		<div class="role">
+			<h3>Teaching Assistant | Quakerbridge Learning Center</h3>
+			<p><strong>June 2023 - August 2025</strong> | Lawrenceville, New Jersey</p>
 			<ul>
-				<li>Programming Languages: Python, JavaScript, Java</li>
-				<li>Web Development: HTML, CSS, React</li>
-				<li>Database Management: MySQL</li>
-				<li>Version Control: Git</li>
-				<!-- Fill out Skills + consider adding icons or Skill cards-->
+				<li>Taught Java and CS fundamentals to 50+ students, developing and delivering curriculum materials for computer science exemption exams, achieving a near 100% pass rate</li>
+				<li>Curated and evaluated assignments/assessments while managing stakeholder communications and earning positive instructor recommendations</li>
+			</ul>
+		</div>
+	
+		<div class="role">
+			<h3>Assignment Developer | Assignment Guru, Rutgers Computer Science Dept.</h3>
+			<p><strong>June 2025 - August 2025</strong> | Piscataway, New Jersey</p>
+			<ul>
+				<li>Developed challenging Data Structures and Intro to CS Java programming assignments to be used by 3000+ students</li>
+			</ul>
+		</div>
+	
+		<div class="role">
+			<h3>Video Compression Research Project | Columbia University</h3>
+			<p><strong>July 2023 - December 2023</strong></p>
+			<ul>
+				<li>Created a bitrate scaling video compression algorithm that analyzes frame content complexity, achieving 80%+ compression while maintaining near-lossless quality</li>
+				<li>Designed a complexity scoring pipeline in Python/OpenCV with frame variance/motion analysis for dynamic bitrate adjustment, exceeding standard VBR performance</li>
 			</ul>
 		</div>
 	</section>
-
-	<section id="experience">
-	   <h1 class="title">EXPERIENCE</h1>
-	   <div class="container-fluid detail">
-			<div class="experience card">
-				<div><strong>Title</strong>, <em>Role</em></div>
-            <div>Date</div>
-            <p>Description</p>
-			<!-- Add experience cards -->
-			 <!-- Can include popup/redirect for further description -->
-        </div>
-	</section>
-
-	<section id="projects">
+	
+	<section id="projects" class="section">
 		<h2>Projects</h2>
-		<ul>
-			<li><strong>Project A:</strong> A web application that helps users manage their tasks efficiently.</li>
-			<!-- Add project cards with screenshots -->
-			 <!-- Can include popup/redirect for further description -->
-		</ul>
+		<div class="project">
+			<h3>Drug-Discovery Database Website</h3>
+			<p><strong>May 2025 - Present</strong> | <em>PostgreSQL, Node.js, Express, React, JavaScript</em></p>
+			<ul>
+				<li>Building a PERN-stack platform incorporating 60,000+ pharmaceutical records, enabling companies and researchers to query and analyze critical drug information efficiently</li>
+				<li>Implementing CSV parsing, data cleaning, and database management with a React frontend and REST APIs, securing pre-launch interest from pharmaceutical companies</li>
+			</ul>
+		</div>
+	
+		<div class="project">
+			<h3>Adopt - Mobile App for Animal Rescue and Adoption</h3>
+			<p><strong>September 2025 - Present</strong> | <em>Flutter, Supabase, Figma</em></p>
+			<ul>
+				<li>Developing a cross-platform pet adoption app with verified rescue listings, preference-based matching, and secure authentication, backed by a scalable Supabase framework for future growth</li>
+				<li>Designed app MVP in Figma to demo to stakeholders, gathering prelaunch interest and feedback from 4+ rescue organizations</li>
+			</ul>
+		</div>
+	
+		<div class="project">
+			<h3>LearnTrack - Educational AI App</h3>
+			<p><strong>February 2025 - April 2025</strong> | <em>Flutter, Flask, MySQL, Gemini API, Figma</em></p>
+			<ul>
+				<li>Architected a Flutter mobile app with Flask/MySQL backend and Gemini API integration to deliver AI-generated personalized learning pathways, allowing students to access preorganized, curated resources with user prompts</li>
+				<li>Speared mobile app development using agile sprints and Git workflow, creating Figma UI/UX designs that secured recognition for exceptional quality</li>
+			</ul>
+		</div>
 	</section>
-
+	
+	<section id="leadership" class="section">
+		<h2>Leadership / Involvement</h2>
+		<div class="leadership">
+			<h3>Rutgers Data Science Club - Competition Co-chair</h3>
+			<p><strong>September 2025 - Present</strong></p>
+			<ul>
+				<li>Organized biannual data competitions/dathons for 100+ student participants and coordinated faculty partnerships to design competition datasets and judging criteria</li>
+			</ul>
+		</div>
+	</section>
+	
+	
 	<section id="contact-me">
-		<h1 class="title ...">CONTACT ME</h1>
+		<h1 class="section">CONTACT ME</h1>
 		<form action="[your-form-endpoint]" method="POST">
 			<input name="name" type="text" placeholder="Name">
 			<input name="email" type="email" placeholder="Email Address">
@@ -99,11 +158,16 @@
 			<!-- Design contact-me box at bottom of page -->
 		</form>
 	</section>
+</main>
 
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/custom.js"></script>
-	<!-- What is this -->
+<!-- Scripts-->
+<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="./js/main.js" defer></script>
+<script>
+	window.onbeforeunload = function () {
+	  window.scrollTo(0, 0);
+	};
+  </script>
+
 </body>
 </html>
