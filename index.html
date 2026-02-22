@@ -7,8 +7,7 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/styles.css">
 	
 	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
@@ -23,8 +22,35 @@
 <body>
 	<section class="hero">
 		<h1 class="name">Krish Lenka</h1>
+		<div class="title-carousel">
+			<div class="title-track">
+				<span>AI/Software Engineer</span>
+				<span>Mobile App Developer</span>
+				<span>Data Scientist</span>
+				<span>CS Student</span>
+			</div>
+		</div>
 	</section>
+
+	<div class="menu-button">&#9776;</div>
+
+	<div class="side-nav" id="sideNav">
+		<a href="#about">About</a>
+		<a href="#projects">Projects</a>
+		<a href="#experience">Experience</a>
+		<a href="#contact">Contact</a>
+	</div>
 	
 
+
+	<!-- JavaScript scripts -->
+	<script>
+		const menuButton = document.querySelector(".menu-button");
+		const sideNav = document.getElementById("sideNav");
+	  
+		menuButton.addEventListener("click", () => {
+		  sideNav.classList.toggle("active");
+		});
+	</script>
 </body>
 </html>
