@@ -7,4 +7,5 @@ Welcome to my portfolio.
 - make navbar cleaner
 - find place for hamburger button
 - animate title carousel
+- Make website mobile/multi-platform friendly
 %%
