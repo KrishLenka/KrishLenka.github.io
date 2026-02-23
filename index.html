@@ -7,7 +7,7 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/styles.css">
 	
 	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
@@ -20,6 +20,14 @@
 </head>
 
 <body>
+	<nav class="header">
+		<img src="images/profile.png" alt="Krish Lenka" class="profile-pic">
+		<div class="divider"></div>
+		<div class="menu-button">
+			<div class="arrow"></div>
+		</div>
+	</nav>
+
 	<section class="hero">
 		<h1 class="name">Krish Lenka</h1>
 		<div class="title-carousel">
@@ -31,8 +39,6 @@
 			</div>
 		</div>
 	</section>
-
-	<div class="menu-button">&#9776;</div>
 
 	<div class="side-nav" id="sideNav">
 		<a href="#about">About</a>
@@ -47,9 +53,11 @@
 	<script>
 		const menuButton = document.querySelector(".menu-button");
 		const sideNav = document.getElementById("sideNav");
+		const arrow = document.querySelector(".arrow");
 	  
 		menuButton.addEventListener("click", () => {
 		  sideNav.classList.toggle("active");
+		  arrow.classList.toggle("flipped");
 		});
 	</script>
 </body>
