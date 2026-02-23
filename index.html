@@ -21,24 +21,29 @@
 
 <body>
 	<nav class="header">
-		<img src="images/profile.png" alt="Krish Lenka" class="profile-pic">
-		<div class="divider"></div>
-		<div class="menu-button">
-			<div class="arrow"></div>
+		<div class="left-section">
+			<div class="menu-button">
+				<div class="arrow"></div>
+			</div>
+			<div class="divider"></div>
 		</div>
+		<img src="images/profile.png" alt="Krish Lenka" class="profile-pic">
+		
 	</nav>
 
-	<section class="hero">
-		<h1 class="name">Krish Lenka</h1>
-		<div class="title-carousel">
-			<div class="title-track">
-				<span>AI/Software Engineer</span>
-				<span>Mobile App Developer</span>
-				<span>Data Scientist</span>
-				<span>CS Student</span>
+	<div class="main-content" id="mainContent">
+		<section class="hero">
+			<h1 class="name">Krish Lenka</h1>
+			<div class="title-carousel">
+				<div class="title-track">
+					<span>AI/Software Engineer</span>
+					<span>Mobile App Developer</span>
+					<span>Data Scientist</span>
+					<span>CS Student</span>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 
 	<div class="side-nav" id="sideNav">
 		<a href="#about">About</a>
@@ -54,10 +59,12 @@
 		const menuButton = document.querySelector(".menu-button");
 		const sideNav = document.getElementById("sideNav");
 		const arrow = document.querySelector(".arrow");
+		const mainContent = document.getElementById("mainContent");
 	  
 		menuButton.addEventListener("click", () => {
 		  sideNav.classList.toggle("active");
 		  arrow.classList.toggle("flipped");
+		  mainContent.classList.toggle("shifted");
 		});
 	</script>
 </body>
