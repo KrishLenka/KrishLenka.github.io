@@ -1,192 +1,318 @@
-/* body::before {
-	content: "";
-	position: fixed;
-	inset: 0;
-	background-image: url("../images/grain.png");
-	opacity: 0.08;
-	mix-blend-mode: overlay;
-} */
+/* Keep ui consistent across platforms */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Fonts */
-@font-face { /* Hosting a custom font face */
-	font-family: 'Abtera'; /* font family name to be used later in css */
-	src: url('../fonts/Abtera-Regular.ttf') format('truetype'); /* specifies where the font is located */
-	/* .ttf means truetype format */
-	font-weight: 400; /* Using font weight 400 automatically loads Abtera-Regular */
-	font-style: normal; /* font style (italic, bold, etc) */
-}
-
+/* Load Monaspace Neon font */
 @font-face {
-	font-family: 'Abtera';
-	src: url('../fonts/Abtera-Medium.ttf') format('truetype');
-	font-weight: 500;
+	font-family: "Monaspace Neon";
+	src: url("fonts/MonaspaceNeon/MonaspaceNeon-Var.ttf") format("truetype");
+	font-weight: 200 800;
 	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Abtera';
-	src: url('../fonts/Abtera-SemiBold.ttf') format('truetype');
-	font-weight: 600;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Abtera';
-	src: url('../fonts/Abtera-Bold.ttf') format('truetype');
-	font-weight: 700;
-	font-style: normal;
+	font-display: swap;
 }
 
 :root {
-	--sidebar-width: 140px; /* Defined a CSS variable for sidebar width to help with multi-platform support*/
+	--font-sans: "Monaspace Neon", sans-serif, ui-monospace, system-ui;
+	--ink: #16161d; /* Eigengrau */
+	--paper: #f5e8dc; /* Creamy Champagne i guess? */
+	--red: #DC143C; /* Crimson */
+	--rule: #16161d;
+	--sidebar-width: 180px;
+	--header-h: 60px;
+	--page-pad: 40px;
+	--content-max: 720px;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-	margin: 0; /* Adjust default margin */
-	min-height: 100vh; /* ensures body has full viewport height */
-	background: #000000; /* background color */
-	font-family: 'Abtera', sans-serif; /* Use the custom global font */
-	/* background: linear-gradient(to bottom, #9bb0dd 0%, #e2e8ff 30%, #ecebff 80%, #ead2dd 100%); */
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--font-sans);
+	font-weight: 400;
+	min-height: 100vh;
 }
 
-/* Header */
+/* header column 1 (menu button) shrinks to fit its content
+   header column 2 (nav links) expands to fill all remaining space
+   header column 3 (theme toggle) shrinks to fit its content */
 .header {
-	position: fixed; /* fixes the header at the top of the viewport when scrolling */
-	top: 0; /* positions the header at the top */
-	left: 0; /* positions the header at the left edge */
-	width: 100%; /* header spans full width of the viewport */
-	height: 64px; /* height is jsut 64 px */
-	display: flex; /* use flexbox for layout in header */
-	align-items: center; /* */
-	justify-content: space-between;
-	background: #000000;
-	border-bottom: 1px solid #ffffff;
-	z-index: 1000;
-	padding: 0 20px;
-}
-
-.left-section {
-	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: var(--header-h);
+	display: grid;
+	grid-template-columns: auto 1fr auto;
 	align-items: center;
-	gap: 16px;
+	background: var(--paper);
+	border-bottom: 1px solid var(--rule);
+	z-index: 1000;
+	padding: 0 var(--page-pad);
 }
 
-.divider {
-	width: 2px;
-	border-radius: 999px;
-	height: 32px;
-	background: white;
-}
 
 .menu-button {
-	height: 64px;
-	padding: 0 12px;
+	background: transparent;
+	border: none;
+	color: var(--ink);
+	padding: 6px 8px 6px 0;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 }
 
-.arrow {
-	width: 18px;
-	height: 18px;
-	border-right: 3px solid #ffffff;
-	border-bottom: 3px solid #ffffff;
-	transform: rotate(-45deg);
-	border-radius: 3px;
-	transition: transform 0.4s ease;
+/* Animation to show sidebar icon filled */
+
+.sidebar-icon-fill {
+	fill: transparent;
+	transition: fill 0.2s ease;
 }
 
-.arrow.flipped {
-	/* transform: scaleX(-1) rotate(-45deg); */
-	transform: rotate(135deg);
+.menu-button.is-active .sidebar-icon-fill {
+	fill: currentColor;
 }
 
-.profile-pic {
-	width: 44px;
-	height: 44px;
+
+
+.header-nav {
+	grid-column: 2;
+	justify-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	max-width: 100%;
+}
+
+/* header-nav appearance */
+.header-nav a {
+	font-size: 10px;
+	font-weight: 500;
+	color: var(--ink);
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	opacity: 0.45;
+	transition: opacity 0.2s ease;
+}
+
+.header-nav a:hover    { opacity: 1; }
+/* JS adds this class to whichever link matches the section in view */
+.header-nav a.is-active { opacity: 1; }
+
+.theme-toggle {
+	grid-column: 3;
+	justify-self: end;
+	align-self: center;
+	background: transparent;
+	border: 1px solid var(--ink);
+	cursor: pointer;
+	border-radius: 999px;
+}
+
+/* size of toggle pill */
+.toggle-track {
+	width: 36px;
+	height: 20px;
+	border-radius: 999px;
+	position: relative;
+}
+
+.toggle-thumb {
+	width: 14px;
+	height: 14px;
 	border-radius: 50%;
-	border: 2px solid #ffffff;
-	margin-right: 2rem;
-	/* margin: 7px 16px; */
-	object-fit: cover;
-	cursor: pointer;
-	transition: border-color 0.3s ease, transform 0.3s ease;
+	background: var(--ink);
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	transition: transform 0.3s ease;
 }
 
-.profile-pic:hover {
-	border-color: #d00000;
-	transform: scale(1.05);
+
+body.dark {
+	--ink:   #f5e8dc;
+	--paper: #16161d;
+	--rule:  #FFF5EB;
 }
 
-/* Main Content*/
-.main-content {
-	margin-left: 0;
-	margin-top: 64px;
-	transition: margin-left 0.4s ease;
+body.dark .toggle-thumb {
+	transform: translateX(16px);
 }
 
-.main-content.shifted {
-	margin-left: var(--sidebar-width);
-}
 
-/* Hero css */
-.hero {
-	padding: 2rem;
-	/* font-family: 'Space Grotesk', "Helvetica Neue", sans-serif; */
-	letter-spacing: -0.05em;
-	color: #ffffff;
-}
-
-.name {
-	margin: 0;
-	font-size: clamp(36px, 8vw, 80px);
-	font-weight: 600;
-	text-align: left;
-}
-
-.title-carousel {
-	height: 35px;
-	overflow: hidden;
-	margin-top: -5px;
-}
-
-.title-track span {
-	height: 35px;
-	font-size: clamp(16px, 3vw, 30px);
-	line-height: 35px;
-	color: #d00000;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-}
-
-/* Side navbar css */
 .side-nav {
 	position: fixed;
-	top: 64px;
+	top: var(--header-h);
+	left: calc(-1 * var(--sidebar-width) - 2px); /* -2px further left for the border  */
 	width: var(--sidebar-width);
-	left: calc(-1 * var(--sidebar-width) - 2px);
-	height: 100vh;
+	height: calc(100vh - var(--header-h));
 	display: flex;
-	flex-direction: column;
+	align-items: center;
 	justify-content: center;
-	gap: 60px;
-	transition: left 0.4s ease;
-	background: #000000;
-	z-index: 999;
-	border-right: 2px solid #d00000
+	transition: left 0.35s ease;
+	background: var(--paper);
+	border-right: 1px solid var(--red);
 }
 
-.side-nav a {
-	color: white;
-	text-decoration: none;
-	text-align: left;
-	font-size: 20px;
-	padding-left: 16px;
-	padding-right: 16px;
-	font-family: 'Space Grotesk', "Helvetica Neue", sans-serif;
+.side-nav-placeholder {
+	font-size: 10px;
+	font-weight: 400;
+	text-transform: lowercase;
+	letter-spacing: 0.06em;
+	color: var(--ink);
+	opacity: 0.45;
+	text-align: center;
+	padding: 0 16px;
+	line-height: 1.5;
 }
 
-.side-nav.active {
+/* put this at the end because placeholder should load before it slides in */
+.side-nav.active { left: 0; }
+
+/* main content stays under header and pushes with the sidenav */
+.main-content {
+	margin-left: 0;
+	margin-top: var(--header-h);
+	transition: margin-left 0.35s ease;
+}
+
+/* When the sidebar is open, push the content right so it doesn't overlap   */
+.main-content.shifted { margin-left: var(--sidebar-width); }
+
+
+.section {
+	padding: 0 var(--page-pad);
+	position: relative;
+	min-height: 100vh;
+	scroll-margin-top: var(--header-h);
+}
+
+/* padding-top is distance from name to the rule */
+.section.hero {
+	padding-top: 26px;
+	min-height: calc(100vh - var(--header-h)); /* account for main content getting pushed down by header */
+}
+
+.section:not(.hero) {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.display {
+	font-size: clamp(48px, 10.5vw, 96px);
+	font-weight: 700;
+	line-height: 0.67;
+	letter-spacing: -0.035em;
+	color: var(--ink);
+	text-transform: uppercase;
+	margin-left: -0.04em; 
+}
+
+/* unused at the moment */
+.display-light {
+	font-weight: 300;
+}
+
+/* section headings slightly smaller than hero name */
+.display--section {
+	font-size: clamp(36px, 6.5vw, 72px);
+	line-height: 0.88;
+}
+
+/* hero subtitle carousel */
+.hero-sub {
+	position: relative;
+	overflow: hidden;
+	height: 22px;
+	margin-top: 14px;
+}
+
+/* hero subtitle carousel individual items */
+.sub {
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	line-height: 22px; 
+	color: var(--red);
+	position: absolute;
+	top: 0;
 	left: 0;
+	white-space: nowrap;
+	opacity: 0;
+	transform: translateY(110%); 
+	transition:
+		transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		opacity   0.35s ease;
 }
+
+/* current subtitle slides up to center and becomes visible (carousel logic) */
+.sub.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* outgoing subtitle fades out and slides up */
+.sub.is-leaving {
+	opacity: 0;
+	transform: translateY(-110%);
+}
+
+/* horizontal rule-wrapper: negative left/right margin cancel the parent's padding so the wrapper reaches the page edges.
+   Then padding: 0 var(--page-pad) is re-added so child elements so they line up with the rest of the content */
+.grid-rule-wrap {
+	position: relative;
+	margin: 0 calc(-1 * var(--page-pad));
+	padding: 0 var(--page-pad);
+}
+
+/* horizontal rule line - use border-top to draw the line instead of the default <hr> border */
+.grid-rule {
+	border: none;
+	border-top: 1px solid var(--rule);
+}
+
+/* section/rule number */
+.grid-num {
+	position: absolute;
+	right: var(--page-pad);
+	top: 0;
+	transform: translateY(-50%);
+	font-size: 10px;
+	letter-spacing: 0.06em;
+	color: var(--red);
+	background: var(--paper);
+	padding-left: 10px;
+	line-height: 1;
+}
+
+.section-body {
+	max-width: var(--content-max);
+	padding-top: 26px;
+}
+
+/* used for secondary label text  */
+.meta {
+	font-size: 10px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--red);
+	margin-bottom: 20px;
+	line-height: 1.4;
+}
+
+/* adjustement for smaller screens (to be fixed) */
+/* 
+   @media (max-width: 600px) {
+	:root {
+		--sidebar-width: 120px;
+		--page-pad: 24px;
+	}
+	.header-nav { gap: 16px; }
+	.header-nav a { font-size: 9px; letter-spacing: 0.12em; }
+	.section.hero { padding-top: 40px; padding-bottom: 64px; }
+	.section:not(.hero) { padding-bottom: 56px; }
+	.section-body { padding-top: 20px; }
+}
+ */

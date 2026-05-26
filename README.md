@@ -4,24 +4,7 @@ Welcome to my portfolio.
 
 
 **To-do:**
-- Add comments (next to new css properties for understanding), especially to section out code. Helps with maintainability and understanding.
-
-- Consider moving "profile" picture to top right or replace it completely
-
-- Find out what to do about all that empty space between hero and projects section (add your niche/specialty) animate title carousel
-
-Sidebar:
-- When cursor hovers over one of the options in the sidebar, option should show pop-up animation + text has lighter gray background
-
-- Header will be underlined with white border (similarly to how the sidebar has red border)
-Sidebar will range from bottom of the viewing page up to the header (header is above sidebar in depth)
-
-- Header and sidebar stays fixed on page.
-- Should be able to scroll down to projects section from home page
-
 Projects:
-- "Projects" title/header will be left aligned (big white text just like in main page)
-- Consider red line underlining it ranging from left edge to right edge (like header line)
 - Red line is below side bar in depth
 Keep 3-4 main projects
 
