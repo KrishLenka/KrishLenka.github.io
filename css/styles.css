@@ -12,13 +12,12 @@
 :root {
 	color-scheme: dark;
 	--font-sans: "Monaspace Neon", ui-monospace, system-ui, sans-serif;
-	--ink: #ead2c3;
-	--ink-dim: #9c9992;  /* gray - all secondary/supporting text */
+	--ink: #eae4ce;
+	--ink-dim: #9c9a92;  /* gray - all secondary/supporting text */
 	--paper: #0b0b0d;    /* near-black, avoids halation vs pure #000 */
 	--red: #DC143C;      /* Crimson - LINES ONLY, never text */
 	--rule: #2a2a30;     /* neutral hairlines (header, resting card border) */
 	--surface-hover: rgba(242, 239, 234, 0.05); /* card fill on hover */
-	--sidebar-width: 180px;
 	--header-h: 60px;
 	--page-pad: 40px;
 	--content-max: 720px;
@@ -41,7 +40,7 @@ body {
 	outline-offset: 3px;
 }
 
-/* header column 1 (menu button) and column 3 (empty spacer) share equal width
+/* column 1 (social icons) and column 3 (empty spacer) are both 1fr,
    so column 2 (nav links) sits dead center in the viewport */
 .header {
 	position: fixed;
@@ -58,31 +57,24 @@ body {
 	padding: 0 var(--page-pad);
 }
 
-
-.menu-button {
+.header-social {
 	grid-column: 1;
 	justify-self: start;
-	background: transparent;
-	border: none;
-	color: var(--ink);
-	padding: 6px 8px 6px 0;
 	display: flex;
 	align-items: center;
-	cursor: pointer;
+	gap: 14px;
 }
 
-/* Animation to show sidebar icon filled */
-
-.sidebar-icon-fill {
-	fill: transparent;
-	transition: fill 0.2s ease;
+/* opacity, not stroke width, is what makes these read as light */
+.header-social a {
+	display: flex;
+	color: var(--ink);
+	opacity: 0.45;
+	transition: opacity 0.2s ease;
 }
 
-.menu-button.is-active .sidebar-icon-fill {
-	fill: var(--red);
-}
-
-
+.header-social a:hover { opacity: 1; }
+.header-social svg { display: block; }
 
 .header-nav {
 	grid-column: 2;
@@ -106,7 +98,7 @@ body {
 	transition: opacity 0.2s ease;
 }
 
-.header-nav a:hover    { opacity: 1; }
+.header-nav a:hover { opacity: 1; }
 
 /* JS adds this class to whichever link matches the section in view.
    text-decoration draws the red rule without changing layout (no reflow) */
@@ -118,45 +110,10 @@ body {
 	text-underline-offset: 6px;
 }
 
-
-.side-nav {
-	position: fixed;
-	top: var(--header-h);
-	left: calc(-1 * var(--sidebar-width) - 2px); /* -2px further left for the border  */
-	width: var(--sidebar-width);
-	height: calc(100vh - var(--header-h));
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: left 0.35s ease;
-	background: var(--paper);
-	border-right: 1px solid var(--red);
-}
-
-.side-nav-placeholder {
-	font-size: 10px;
-	font-weight: 400;
-	text-transform: lowercase;
-	letter-spacing: 0.06em;
-	color: var(--ink-dim);
-	text-align: center;
-	padding: 0 16px;
-	line-height: 1.5;
-}
-
-/* put this at the end because placeholder should load before it slides in */
-.side-nav.active { left: 0; }
-
-/* main content stays under header and pushes with the sidenav */
+/* main content just clears the fixed header */
 .main-content {
-	margin-left: 0;
 	margin-top: var(--header-h);
-	transition: margin-left 0.35s ease;
 }
-
-/* When the sidebar is open, push the content right so it doesn't overlap   */
-.main-content.shifted { margin-left: var(--sidebar-width); }
-
 
 .section {
 	padding: 0 var(--page-pad);
@@ -168,7 +125,7 @@ body {
 /* padding-top is distance from name to the rule */
 .section.hero {
 	padding-top: 26px;
-	min-height: calc(100vh - var(--header-h)); /* account for main content getting pushed down by header */
+	min-height: calc(100vh - var(--header-h)); /* account for the header offset */
 }
 
 .section:not(.hero) {
@@ -199,42 +156,31 @@ body {
 	line-height: 0.88;
 }
 
-/* hero subtitle carousel */
+/* hero subtitle typewriter */
 .hero-sub {
-	position: relative;
-	overflow: hidden;
 	height: 22px;
 	margin-top: 14px;
-}
-
-/* hero subtitle carousel individual items */
-.sub {
+	overflow: hidden;
 	font-size: 15px;
 	font-weight: 500;
 	letter-spacing: 0.02em;
 	line-height: 22px;
 	color: var(--ink-dim);
+}
+
+/* pre lives on the SPAN, not the container - see note below */
+.sub-text {
+	white-space: pre;
+}
+
+.sr-only {
 	position: absolute;
-	top: 0;
-	left: 0;
+	width: 1px; height: 1px;
+	margin: -1px; padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
 	white-space: nowrap;
-	opacity: 0;
-	transform: translateY(110%);
-	transition:
-		transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-		opacity   0.35s ease;
-}
-
-/* current subtitle slides up to center and becomes visible (carousel logic) */
-.sub.is-visible {
-	opacity: 1;
-	transform: translateY(0);
-}
-
-/* outgoing subtitle fades out and slides up */
-.sub.is-leaving {
-	opacity: 0;
-	transform: translateY(-110%);
+	border: 0;
 }
 
 .section-body {
@@ -247,7 +193,7 @@ body {
 	max-width: var(--content-wide);
 }
 
-/* used for secondary label text  */
+/* used for secondary label text */
 .meta {
 	font-size: 10px;
 	font-weight: 400;
@@ -332,16 +278,14 @@ body {
 	*, *::before, *::after {
 		transition-duration: 0.01ms !important;
 		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
 	}
 }
 
 /* adjustement for smaller screens (to be fixed) */
 /*
    @media (max-width: 600px) {
-	:root {
-		--sidebar-width: 120px;
-		--page-pad: 24px;
-	}
+	:root { --page-pad: 24px; }
 	.header-nav { gap: 16px; }
 	.header-nav a { font-size: 9px; letter-spacing: 0.12em; }
 	.section.hero { padding-top: 40px; padding-bottom: 64px; }
