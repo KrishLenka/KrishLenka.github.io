@@ -46,10 +46,11 @@ const sectionObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: "-50% 0px -50% 0px" });
 document.querySelectorAll(".section[id]").forEach(s => sectionObserver.observe(s));
-document.querySelectorAll('.header-nav a[data-section="hero"]').addEventListener("click", (e) => {
-  e.preventDefault();
-  window.scrollTo({ top: 0 });
-  history.replaceState(null, "", location.pathname);
+document.querySelector('.header-nav a[data-section="hero"]')
+  .addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0 });
+    history.replaceState(null, "", location.pathname);
   });
 
 // Card thumbnails: play video on hover, reset on leave
