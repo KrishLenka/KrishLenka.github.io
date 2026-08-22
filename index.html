@@ -21,16 +21,11 @@
 			</svg>
 		</button>
 		<nav class="header-nav" aria-label="Primary">
-			<a href="#hero">About Me</a>
-			<a href="#projects">Projects</a>
-			<a href="#experience">Experience</a>
-			<a href="#contact">Contact</a>
+			<a href="./"	data-section="hero">About Me</a>
+			<a href="./projects" data-section="projects">Projects</a>
+			<a href="./experience" data-section="experience">Experience</a>
+			<a href="./contact" data-section="contact">Contact</a>
 		</nav>
-		<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
-			<div class="toggle-track">
-				<div class="toggle-thumb"></div>
-			</div>
-		</button>
 	</header>
 	<div class="side-nav" id="sideNav">
 		<p class="side-nav-placeholder">content coming soon...</p>
@@ -38,10 +33,7 @@
 
 	<main class="main-content" id="mainContent">
 		<section class="section hero" id="hero">
-			<div class="grid-rule-wrap">
-				<hr class="grid-rule">
-				<span class="grid-num">01</span>
-			</div>
+			<hr class="grid-rule">
 			<div class="section-body">
 				<h1 class="display">
 					KRISH LENKA
@@ -49,37 +41,70 @@
 				<div class="hero-sub">
 					<span class="sub">Computer Science Student</span>
 					<span class="sub">Software Engineer</span>
-					<span class="sub">AI & ML Engineer</span> 
+					<span class="sub">AI &amp; ML Engineer</span>
 					<span class="sub">Mobile App Developer</span>
 				</div>
 			</div>
 		</section>
 
 		<section class="section" id="projects">
-			<div class="grid-rule-wrap">
-				<hr class="grid-rule">
-				<span class="grid-num">02</span>
-			</div>
-			<div class="section-body">
+			<hr class="grid-rule">
+			<div class="section-body section-body--wide">
 				<h2 class="display display--section">PROJECTS</h2>
+
+				<div class="card-grid">
+
+					<article class="card">
+						<h3 class="card-title">LearnTrack</h3>
+						<p class="card-date">Feb 2025 - Apr 2025</p>
+						<div class="card-thumb">
+							<video
+								src="media/LearnTrackDemo.mp4"
+								poster="media/LearnTrack.png"
+								muted loop playsinline
+								preload="none"
+								aria-hidden="true"></video>
+						</div>
+						<p class="card-desc">
+							An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.
+						</p>
+					</article>
+
+					<article class="card">
+						<h3 class="card-title">Project Title</h3>
+						<p class="card-date">Aug 2026 - Present</p>
+						<!-- drop an <img src="..." alt="..."> in here when you have one;
+						     it will letterbox itself against the black -->
+						<div class="card-thumb"></div>
+						<p class="card-desc">
+							Short description of project.
+						</p>
+					</article>
+
+					<article class="card">
+						<h3 class="card-title">Project Title</h3>
+						<p class="card-date">Aug 2026 - Present</p>
+						<!-- drop an <img src="..." alt="..."> in here when you have one;
+						     it will letterbox itself against the black -->
+						<div class="card-thumb"></div>
+						<p class="card-desc">
+							Short description of project.
+						</p>
+					</article>
+
+				</div>
 			</div>
 		</section>
 
 		<section class="section" id="experience">
-			<div class="grid-rule-wrap">
-				<hr class="grid-rule">
-				<span class="grid-num">03</span>
-			</div>
+			<hr class="grid-rule">
 			<div class="section-body">
 				<h2 class="display display--section">EXPERIENCE</h2>
 			</div>
 		</section>
 
 		<section class="section" id="contact">
-			<div class="grid-rule-wrap">
-				<hr class="grid-rule">
-				<span class="grid-num">04</span>
-			</div>
+			<hr class="grid-rule">
 			<div class="section-body">
 				<h2 class="display display--section">CONTACT</h2>
 			</div>

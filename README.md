@@ -8,15 +8,6 @@ Projects:
 Keep 3-4 main projects
 
 Project card:
-- Project Title
-- Rest of content will be in a lighter tinted box
-- Differ warm color from main background (probably darker orange)
-- Initially outlined in 1px gray border
-- Thumbnail
-- Title in larger bold font
-- Date range below that in regular sized red font
-- Short description in regular sized white font
-- When card is hovered over, card indicates clickable (either pop up or change overall tint or make borders/text darker in color)
 - Clicking card will either open up pop-up or redirect to new page 
 
 New project page/pop-up will have:

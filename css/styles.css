@@ -1,7 +1,6 @@
-/* Keep ui consistent across platforms */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Load Monaspace Neon font */
+/* Monaspace Neon font */
 @font-face {
 	font-family: "Monaspace Neon";
 	src: url("fonts/MonaspaceNeon/MonaspaceNeon-Var.ttf") format("truetype");
@@ -11,15 +10,19 @@
 }
 
 :root {
-	--font-sans: "Monaspace Neon", sans-serif, ui-monospace, system-ui;
-	--ink: #16161d; /* Eigengrau */
-	--paper: #f5e8dc; /* Creamy Champagne i guess? */
-	--red: #DC143C; /* Crimson */
-	--rule: #16161d;
+	color-scheme: dark;
+	--font-sans: "Monaspace Neon", ui-monospace, system-ui, sans-serif;
+	--ink: #ead2c3;
+	--ink-dim: #9c9992;  /* gray - all secondary/supporting text */
+	--paper: #0b0b0d;    /* near-black, avoids halation vs pure #000 */
+	--red: #DC143C;      /* Crimson - LINES ONLY, never text */
+	--rule: #2a2a30;     /* neutral hairlines (header, resting card border) */
+	--surface-hover: rgba(242, 239, 234, 0.05); /* card fill on hover */
 	--sidebar-width: 180px;
 	--header-h: 60px;
 	--page-pad: 40px;
 	--content-max: 720px;
+	--content-wide: 1200px; /* wider track for the card grid */
 }
 
 html { scroll-behavior: smooth; }
@@ -32,9 +35,14 @@ body {
 	min-height: 100vh;
 }
 
-/* header column 1 (menu button) shrinks to fit its content
-   header column 2 (nav links) expands to fill all remaining space
-   header column 3 (theme toggle) shrinks to fit its content */
+/* keyboard focus ring - one of the few places red is allowed */
+:focus-visible {
+	outline: 1px solid var(--red);
+	outline-offset: 3px;
+}
+
+/* header column 1 (menu button) and column 3 (empty spacer) share equal width
+   so column 2 (nav links) sits dead center in the viewport */
 .header {
 	position: fixed;
 	top: 0;
@@ -42,7 +50,7 @@ body {
 	width: 100%;
 	height: var(--header-h);
 	display: grid;
-	grid-template-columns: auto 1fr auto;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
 	background: var(--paper);
 	border-bottom: 1px solid var(--rule);
@@ -52,6 +60,8 @@ body {
 
 
 .menu-button {
+	grid-column: 1;
+	justify-self: start;
 	background: transparent;
 	border: none;
 	color: var(--ink);
@@ -69,7 +79,7 @@ body {
 }
 
 .menu-button.is-active .sidebar-icon-fill {
-	fill: currentColor;
+	fill: var(--red);
 }
 
 
@@ -97,47 +107,15 @@ body {
 }
 
 .header-nav a:hover    { opacity: 1; }
-/* JS adds this class to whichever link matches the section in view */
-.header-nav a.is-active { opacity: 1; }
 
-.theme-toggle {
-	grid-column: 3;
-	justify-self: end;
-	align-self: center;
-	background: transparent;
-	border: 1px solid var(--ink);
-	cursor: pointer;
-	border-radius: 999px;
-}
-
-/* size of toggle pill */
-.toggle-track {
-	width: 36px;
-	height: 20px;
-	border-radius: 999px;
-	position: relative;
-}
-
-.toggle-thumb {
-	width: 14px;
-	height: 14px;
-	border-radius: 50%;
-	background: var(--ink);
-	position: absolute;
-	top: 2px;
-	left: 2px;
-	transition: transform 0.3s ease;
-}
-
-
-body.dark {
-	--ink:   #f5e8dc;
-	--paper: #16161d;
-	--rule:  #FFF5EB;
-}
-
-body.dark .toggle-thumb {
-	transform: translateX(16px);
+/* JS adds this class to whichever link matches the section in view.
+   text-decoration draws the red rule without changing layout (no reflow) */
+.header-nav a.is-active {
+	opacity: 1;
+	text-decoration: underline;
+	text-decoration-color: var(--red);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 6px;
 }
 
 
@@ -160,8 +138,7 @@ body.dark .toggle-thumb {
 	font-weight: 400;
 	text-transform: lowercase;
 	letter-spacing: 0.06em;
-	color: var(--ink);
-	opacity: 0.45;
+	color: var(--ink-dim);
 	text-align: center;
 	padding: 0 16px;
 	line-height: 1.5;
@@ -199,6 +176,13 @@ body.dark .toggle-thumb {
 	padding-bottom: 0;
 }
 
+/* full-width red hairline that opens each section.
+   sits inside the section's padding, so it lines up with the content */
+.grid-rule {
+	border: none;
+	border-top: 1px solid var(--red);
+}
+
 .display {
 	font-size: clamp(48px, 10.5vw, 96px);
 	font-weight: 700;
@@ -206,12 +190,7 @@ body.dark .toggle-thumb {
 	letter-spacing: -0.035em;
 	color: var(--ink);
 	text-transform: uppercase;
-	margin-left: -0.04em; 
-}
-
-/* unused at the moment */
-.display-light {
-	font-weight: 300;
+	margin-left: -0.04em;
 }
 
 /* section headings slightly smaller than hero name */
@@ -233,14 +212,14 @@ body.dark .toggle-thumb {
 	font-size: 15px;
 	font-weight: 500;
 	letter-spacing: 0.02em;
-	line-height: 22px; 
-	color: var(--red);
+	line-height: 22px;
+	color: var(--ink-dim);
 	position: absolute;
 	top: 0;
 	left: 0;
 	white-space: nowrap;
 	opacity: 0;
-	transform: translateY(110%); 
+	transform: translateY(110%);
 	transition:
 		transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
 		opacity   0.35s ease;
@@ -258,37 +237,14 @@ body.dark .toggle-thumb {
 	transform: translateY(-110%);
 }
 
-/* horizontal rule-wrapper: negative left/right margin cancel the parent's padding so the wrapper reaches the page edges.
-   Then padding: 0 var(--page-pad) is re-added so child elements so they line up with the rest of the content */
-.grid-rule-wrap {
-	position: relative;
-	margin: 0 calc(-1 * var(--page-pad));
-	padding: 0 var(--page-pad);
-}
-
-/* horizontal rule line - use border-top to draw the line instead of the default <hr> border */
-.grid-rule {
-	border: none;
-	border-top: 1px solid var(--rule);
-}
-
-/* section/rule number */
-.grid-num {
-	position: absolute;
-	right: var(--page-pad);
-	top: 0;
-	transform: translateY(-50%);
-	font-size: 10px;
-	letter-spacing: 0.06em;
-	color: var(--red);
-	background: var(--paper);
-	padding-left: 10px;
-	line-height: 1;
-}
-
 .section-body {
 	max-width: var(--content-max);
 	padding-top: 26px;
+}
+
+/* sections holding the card grid need a wider track than prose sections */
+.section-body--wide {
+	max-width: var(--content-wide);
 }
 
 /* used for secondary label text  */
@@ -297,13 +253,90 @@ body.dark .toggle-thumb {
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 0.16em;
-	color: var(--red);
+	color: var(--ink-dim);
 	margin-bottom: 20px;
 	line-height: 1.4;
 }
 
+
+/* ---------- Project cards ---------- */
+
+/* auto-fit + minmax handles the 3 -> 2 -> 1 reflow with no media queries.
+   min(320px, 100%) stops the column from overflowing on very narrow phones.
+   --content-wide caps the row at 3, so it never becomes 4 on a big monitor */
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+	gap: 28px;
+	margin: 40px 0 80px;
+}
+
+.card {
+	border: 1px solid var(--rule);
+	background: transparent;
+	padding: 22px;
+	cursor: pointer;
+	transition:
+		border-color 0.2s ease,
+		background-color 0.2s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+	border-color: var(--red);
+	background: var(--surface-hover);
+}
+
+.card-title {
+	font-size: 22px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1.15;
+	color: var(--ink);
+}
+
+.card-date {
+	font-size: 13px;
+	color: var(--ink-dim);
+	margin-top: 8px;
+}
+
+/* fixed 16:9 letterbox. the black fill shows as bars on either side of any
+   image that isn't 16:9, because object-fit: contain never crops */
+.card-thumb {
+	aspect-ratio: 16 / 9;
+	background: #000;
+	margin-top: 18px;
+	overflow: hidden;
+}
+
+.card-thumb img,
+.card-thumb video {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+.card-desc {
+	font-size: 14px;
+	line-height: 1.55;
+	color: var(--ink);
+	margin-top: 18px;
+}
+
+
+/* respect users who've asked their OS to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before, *::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+	}
+}
+
 /* adjustement for smaller screens (to be fixed) */
-/* 
+/*
    @media (max-width: 600px) {
 	:root {
 		--sidebar-width: 120px;

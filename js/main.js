@@ -10,16 +10,12 @@ menuButton.addEventListener("click", () => {
   menuButton.setAttribute("aria-expanded", isOpen);
 });
 
-// Dark mode toggle
-document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-
 // Subtitle carousel
 const subs = Array.from(document.querySelectorAll(".sub"));
 let subIndex = 0;
 subs[0].classList.add("is-visible");
 function rotateSub() {
+  if (document.hidden) return;
   const leaving  = subs[subIndex];
   subIndex       = (subIndex + 1) % subs.length; // wraps around to 0 after 3
   const entering = subs[subIndex];
@@ -35,20 +31,39 @@ function rotateSub() {
 setInterval(rotateSub, 5000);
 
 // Automatically update active nav link based on viewport midpoint
-const navLinks = document.querySelectorAll(".header-nav a");
+const navLinks = document.querySelector(
+  `.header-nav a`
+);
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       navLinks.forEach(link => link.classList.remove("is-active"));
       const activeLink = document.querySelector(
-        `.header-nav a[href="#${entry.target.id}"]` // dynamically find the nav link that corresponds to the section in view
+        `.header-nav a[data-section="/${entry.target.id}"]`
       );
-      if (activeLink) activeLink.classList.add("is-active"); // guard to prevent crash in case no matching link is found
+      if (activeLink) activeLink.classList.add("is-active");
     }
   });
-}, { rootMargin: "-50% 0px -50% 0px" }); // Shrinks the detection zone to a horizontal line at the viewport's midpoint
+}, { rootMargin: "-50% 0px -50% 0px" });
 document.querySelectorAll(".section[id]").forEach(s => sectionObserver.observe(s));
+document.querySelectorAll('.header-nav a[data-section="hero"]').addEventListener("click", (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0 });
+  history.replaceState(null, "", location.pathname);
+  });
 
+// Card thumbnails: play video on hover, reset on leave
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!reduceMotion) {
+  document.querySelectorAll(".card-thumb video").forEach(video => {
+    const card = video.closest(".card");
+    card.addEventListener("mouseenter", () => video.play().catch(() => {}));
+    card.addEventListener("mouseleave", () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
+}
 
 /** NOTES
  * 
