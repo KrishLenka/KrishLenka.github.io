@@ -1,5 +1,17 @@
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const root = document.documentElement;
+const themeToggle = document.getElementById("themeToggle");
+
+function setTheme(dark) {
+  root.classList.toggle("dark", dark);
+  themeToggle.setAttribute("aria-pressed", dark);
+  try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+}
+
+themeToggle.setAttribute("aria-pressed", root.classList.contains("dark"));
+themeToggle.addEventListener("click", () => setTheme(!root.classList.contains("dark")));
+
 // ---------- Subtitle typewriter ----------
 // erases the current title character by character, then types the next one
 const heroSub  = document.querySelector(".hero-sub");
@@ -46,13 +58,13 @@ if (!reduceMotion) setTimeout(cycle, HOLD_MS);
 
 
 // ---------- Active nav link, based on viewport midpoint ----------
-const navLinks = document.querySelectorAll(".header-nav a");
+const navLinks = document.querySelectorAll(".header-middle a");
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       navLinks.forEach(link => link.classList.remove("is-active"));
       const activeLink = document.querySelector(
-        `.header-nav a[data-section="${entry.target.id}"]`
+        `.header-middle a[data-section="${entry.target.id}"]`
       );
       if (activeLink) activeLink.classList.add("is-active"); // guard in case no link matches
     }
@@ -61,7 +73,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll(".section[id]").forEach(s => sectionObserver.observe(s));
 
 // "About Me" points at the site root; scroll instead of reloading
-document.querySelector('.header-nav a[data-section="hero"]')
+document.querySelector('.header-middle a[data-section="hero"]')
   .addEventListener("click", (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0 }); // no behavior key, so CSS scroll-behavior decides
