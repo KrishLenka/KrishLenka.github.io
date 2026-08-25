@@ -19,6 +19,9 @@
 	--red: #B4122F;
 	--rule: #bbada6;
 	--surface-hover: rgba(22, 22, 29, 0.05);
+	--thumb-bg: #16161d;
+	--ok: #1F7A45;      /* open-source badge */
+	--alert: #B4122F;   /* closed-source badge */
 	--header-h: 60px;
 	--page-pad: clamp(16px, 4vw, 40px);
 	--content-max: 720px;
@@ -28,15 +31,21 @@
 /* Dark mode */
 :root.dark {
 	color-scheme: dark;
-	--ink: #eae4ce; 
+	--ink: #eae4ce;
 	--ink-dim: #9c9a92;
 	--paper: #0b0b0d;
 	--red: #DC143C;
 	--rule: #2a2a30;
 	--surface-hover: rgba(242, 239, 234, 0.05);
+	--thumb-bg: #000;
+	--ok: #4ED17F;      /* lighter, so badge text stays legible on near-black */
+	--alert: #FF6B84;
 }
 
 html { scroll-behavior: smooth; }
+
+/* JS adds this while a project dialog is open, so the page behind can't scroll */
+html.modal-open { overflow: hidden; }
 
 body {
 	background: var(--paper);
@@ -55,6 +64,8 @@ body {
 /* header */
 .header {
 	position: fixed;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: var(--header-h);
 	display: grid;
@@ -85,6 +96,21 @@ body {
 
 .header-left a:hover { opacity: 1; }
 .header-left svg { display: block; }
+
+/* resume gets a red frame - the one emphasised item in the header */
+.header-left a.header-cta {
+	opacity: 0.85;
+	font-size: 10px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	white-space: nowrap;
+	border: 1px solid var(--red);
+	padding: 5px 10px;
+	transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.header-left a.header-cta:hover { background: var(--surface-hover); }
 
 /* middle nav buttons on header */
 .header-middle {
@@ -214,15 +240,13 @@ body {
 	color: var(--ink-dim);
 }
 
-.sub-text {
-	white-space: pre;
-}
+.sub-text { white-space: pre; }
 
 .other-titles {
 	position: absolute;
-	width: 1px; 
+	width: 1px;
 	height: 1px;
-	margin: -1px; 
+	margin: -1px;
 	padding: 0;
 	overflow: hidden;
 	clip-path: inset(50%);
@@ -251,6 +275,43 @@ body {
 }
 
 
+/* ---------- Pills (shared by cards and dialogs) ---------- */
+
+.pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	list-style: none; /* the reset at the top zeroes margin/padding but not markers */
+}
+
+.pill {
+	font-size: 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	border: 1px solid var(--rule);
+	border-radius: 999px;
+	padding: 3px 9px;
+	color: var(--ink-dim);
+	white-space: nowrap;
+	line-height: 1.5;
+}
+
+/* larger source badge used inside the dialog */
+.pill--source {
+	font-size: 11px;
+	padding: 5px 12px;
+	font-weight: 500;
+}
+
+.pill--open   { border-color: var(--ok);    color: var(--ok); }
+.pill--closed { border-color: var(--alert); color: var(--alert); }
+
+
+/* ---------- Project cards ---------- */
+
+/* auto-fit + minmax handles the 3 -> 2 -> 1 reflow with no media queries.
+   min(420px, 100%) stops the column overflowing on phones AND caps the row
+   at 3 against --content-wide: (1500+28)/(420+28) = 3.4 */
 .card-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
@@ -259,17 +320,17 @@ body {
 }
 
 .card {
+	position: relative; /* anchors the full-card click overlay */
 	border: 1px solid var(--rule);
 	background: transparent;
 	padding: 22px;
-	cursor: pointer;
 	transition:
 		border-color 0.2s ease,
 		background-color 0.2s ease;
 }
 
 .card:hover,
-.card:focus-visible {
+.card:has(.card-open:focus-visible) {
 	border-color: var(--red);
 	background: var(--surface-hover);
 }
@@ -282,16 +343,35 @@ body {
 	color: var(--ink);
 }
 
+/* the real control. its ::after stretches over the whole card, so the card
+   is clickable while there is still exactly ONE thing in the tab order */
+.card-open {
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.card-open::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
 .card-date {
 	font-size: 13px;
 	color: var(--ink-dim);
 	margin-top: 8px;
 }
 
-
+/* fixed 16:9 letterbox. object-fit: contain never crops, so anything that
+   isn't 16:9 gets bars in --thumb-bg */
 .card-thumb {
 	aspect-ratio: 16 / 9;
-	background: #000;
+	background: var(--thumb-bg);
 	margin-top: 18px;
 	overflow: hidden;
 }
@@ -311,6 +391,275 @@ body {
 	margin-top: 18px;
 }
 
+.card-tags { margin-top: 16px; }
+
+
+/* ---------- Project dialog ---------- */
+
+/* NOTE: no `display` on .pj itself. A bare <dialog> is display:none until
+   opened, so putting display:flex here would make every dialog always visible.
+   It goes on [open] only. */
+.pj {
+	width: min(1100px, 92vw);
+	max-height: 88vh;
+	/* the `* { margin: 0 }` reset at the top of this file overrides the browser's
+	   built-in `dialog { margin: auto }`, which is what centres a modal. restore it. */
+	margin: auto;
+	padding: 0;
+	border: 1px solid var(--rule);
+	background: var(--paper);
+	color: var(--ink);
+	overflow: hidden;
+}
+
+.pj[open] {
+	display: flex;
+	flex-direction: column;
+}
+
+.pj::backdrop {
+	background: rgba(0, 0, 0, 0.66);
+}
+
+/* header is a flex child that never shrinks, and the body below it scrolls,
+   so the title stays put without needing position: sticky */
+.pj-header {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+	padding: 20px 24px 14px;
+	border-bottom: 1px solid var(--red);
+}
+
+.pj-title {
+	font-size: clamp(20px, 3vw, 28px);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.1;
+}
+
+.pj-close {
+	margin-left: auto;
+	flex: 0 0 auto;
+	background: none;
+	border: none;
+	padding: 4px;
+	line-height: 0;
+	color: var(--red);
+	cursor: pointer;
+	opacity: 0.75;
+	transition: opacity 0.2s ease;
+}
+
+.pj-close:hover { opacity: 1; }
+
+.pj-body {
+	flex: 1 1 auto;
+	overflow-y: auto;
+	overscroll-behavior: contain; /* stops scroll chaining to the page behind */
+	padding: 22px 24px 28px;
+}
+
+/* media on the left, facts on the right; stacks on narrow screens */
+.pj-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+    gap: 26px;
+    margin-bottom: 26px;
+}
+
+/* Stack media and information on smaller screens */
+@media (max-width: 760px) {
+    .pj-top {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+
+/* ---------- Carousel ---------- */
+
+.pj-carousel { position: relative; }
+
+/* scroll-snap gives native touch swiping and momentum for free.
+   the pointer handlers in main.js only add click-drag for mice */
+.pj-track {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	touch-action: pan-y pinch-zoom;
+}
+
+.pj-track.is-dragging * { user-select: none; }
+
+.pj-track::-webkit-scrollbar { display: none; }
+
+.pj-track.is-dragging {
+	scroll-snap-type: none; /* snapping fights manual scrollLeft mid-drag */
+	cursor: grabbing;
+}
+
+.pj-slide {
+	flex: 0 0 100%;
+	scroll-snap-align: start;
+	aspect-ratio: 16 / 9;
+	background: var(--thumb-bg);
+}
+
+.pj-slide img,
+.pj-slide video {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+/* nothing in a slide is clickable (video loops on its own, like a gif),
+   so let every pointer event fall through to the drag handler on the track */
+.pj-slide img,
+.pj-slide video {
+	pointer-events: none;
+	-webkit-user-drag: none;
+}
+
+.pj-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	display: grid;
+	place-items: center;
+	background: var(--paper);
+	color: var(--ink);
+	border: 1px solid var(--rule);
+	cursor: pointer;
+	transition: border-color 0.2s ease;
+}
+
+.pj-arrow:hover { border-color: var(--red); }
+.pj-arrow--prev { left: 8px; }
+.pj-arrow--next { right: 8px; }
+
+/* display:grid above would beat the [hidden] attribute, so restate it */
+.pj-arrow[hidden] { display: none; }
+
+.pj-count {
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	color: var(--ink-dim);
+	margin-top: 8px;
+	text-align: right;
+}
+
+
+/* ---------- Facts column ---------- */
+
+.pj-facts {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.pj-label {
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--ink-dim);
+	margin-bottom: 8px;
+}
+
+/* role / team / status - the things a recruiter scans for first */
+.pj-specs {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 6px 14px;
+	font-size: 13px;
+}
+
+.pj-specs dt {
+	color: var(--ink-dim);
+	white-space: nowrap;
+}
+
+.pj-links {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.pj-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	border: 1px solid var(--rule);
+	padding: 9px 12px;
+	font-size: 12px;
+	color: var(--ink);
+	text-decoration: none;
+	transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.pj-link:hover {
+	border-color: var(--red);
+	background: var(--surface-hover);
+}
+
+.pj-link span { opacity: 0.5; }
+
+
+/* ---------- Collapsible sections ---------- */
+
+/* native <details> - free keyboard support, free open/close state, no JS */
+.pj-section { border-top: 1px solid var(--rule); }
+.pj-section:last-of-type { border-bottom: 1px solid var(--rule); }
+
+.pj-section > summary {
+	list-style: none;
+	cursor: pointer;
+	padding: 14px 6px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	transition: background-color 0.2s ease;
+}
+
+.pj-section > summary::-webkit-details-marker { display: none; }
+.pj-section > summary:hover { background: var(--surface-hover); }
+
+.pj-chev {
+	flex: 0 0 auto;
+	color: var(--ink-dim);
+	transition: transform 0.2s ease;
+}
+
+.pj-section[open] .pj-chev { transform: rotate(180deg); }
+
+.pj-prose {
+	padding: 2px 6px 20px;
+	font-size: 14px;
+	line-height: 1.65;
+	max-width: 68ch;
+}
+
+.pj-prose p + p { margin-top: 12px; }
+
+.pj-prose a {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-color: var(--red);
+	text-underline-offset: 3px;
+}
+
+
 /* CSS for smaller screen sizes */
 @media (max-width: 760px) {
 	.header {
@@ -319,14 +668,55 @@ body {
 		gap: 8px;
 	}
 
-	.header-social,
-	.header-middle {
+	/* display:contents dissolves these wrappers so all the header items
+	   become direct flex children and distribute evenly */
+	.header-left,
+	.header-middle,
+	.header-right {
 		display: contents;
 	}
+
 	.header-middle a {
 		font-size: 9px;
 		letter-spacing: 0.06em;
 	}
+
+	.header-left a.header-cta {
+		border: none;
+		padding: 0;
+		font-size: 9px;
+		letter-spacing: 0.06em;
+	}
+
+	.pj { width: 100vw; max-height: 100vh; height: 100vh; border: none; margin: 0; }
+	.pj-header { padding: 16px 16px 12px; }
+	.pj-body { padding: 18px 16px 24px; }
+}
+
+/* Phones: one row can't hold 8 items, so the nav drops to its own row.
+   --header-h has to grow with it, since .main-content and scroll-margin
+   are both measured from it. */
+@media (max-width: 520px) {
+	:root { --header-h: 92px; }
+
+	.header {
+		flex-wrap: wrap;
+		align-content: center;
+		row-gap: 8px;
+	}
+
+	.header-left  { display: flex; flex: 1 1 auto; }
+	.header-right { display: flex; flex: 0 0 auto; margin-left: auto; }
+
+	.header-middle {
+		display: flex;
+		order: 3;
+		flex: 1 0 100%;
+		justify-content: space-between;
+		gap: 4px;
+	}
+
+	.header-middle a { font-size: 9px; letter-spacing: 0.04em; }
 }
 
 /* reduce motion if OS asks for it */

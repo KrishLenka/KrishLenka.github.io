@@ -46,9 +46,6 @@
 			</button>
 		</div>
 	</header>
-	<div class="side-nav" id="sideNav">
-		<p class="side-nav-placeholder">content coming soon...</p>
-	</div>
 
 	<main class="main-content" id="mainContent">
 		<section class="section hero" id="hero">
@@ -72,7 +69,11 @@
 				<div class="card-grid">
 
 					<article class="card">
-						<h3 class="card-title">LearnTrack</h3>
+						<h3 class="card-title">LearnTrack
+							<button class="card-open" type="button" data-project="learntrack">
+								LearnTrack
+							</button>
+						</h3>
 						<p class="card-date">Feb 2025 - Apr 2025</p>
 						<div class="card-thumb">
 							<video
@@ -85,28 +86,43 @@
 						<p class="card-desc">
 							An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.
 						</p>
+						<ul class="pills card-tags">
+							<li class="pill">Flutter</li>
+							<li class="pill">FastAPI</li>
+							<li class="pill">SQL Lite</li>
+						</ul>
 					</article>
 
 					<article class="card">
-						<h3 class="card-title">Project Title</h3>
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="placeholder-two">Project Title</button>
+						</h3>
 						<p class="card-date">Aug 2026 - Present</p>
-						<!-- drop an <img src="..." alt="..."> in here when you have one;
-						     it will letterbox itself against the black -->
 						<div class="card-thumb"></div>
 						<p class="card-desc">
 							Short description of project.
 						</p>
+						<ul class="pills card-tags">
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+						</ul>
 					</article>
 
 					<article class="card">
-						<h3 class="card-title">Project Title</h3>
+						<h3 class="card-title">Project Title
+							<button class="card-open" type="button" data-project="placeholder-three">Project Title</button>
+						</h3>
 						<p class="card-date">Aug 2026 - Present</p>
-						<!-- drop an <img src="..." alt="..."> in here when you have one;
-						     it will letterbox itself against the black -->
 						<div class="card-thumb"></div>
 						<p class="card-desc">
 							Short description of project.
 						</p>
+						<ul class="pills card-tags">
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+						</ul>
 					</article>
 
 				</div>
@@ -128,6 +144,119 @@
 		</section>
 
 	</main>
+
+
+	<!-- Project Pop Up (copy below) -->
+	<dialog class="pj" id="pj-learntrack" aria-labelledby="pj-learntrack-title">
+		<div class="pj-header">
+			<h2 class="pj-title" id="pj-learntrack-title">LearnTrack</h2>
+			<button class="pj-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">
+				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+					<line x1="5" y1="5" x2="15" y2="15"/><line x1="15" y1="5" x2="5" y2="15"/>
+				</svg>
+			</button>
+		</div>
+		<div class="pj-body">
+			<div class="pj-top">
+				<div class="pj-carousel">
+					<div class="pj-track">
+						<div class="pj-slide">
+							<video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" control muted loop playsinline preload="metadata"></video>
+						</div>
+						<div class="pj-slide">
+							<img src=""media/placeholder-two.png" alt="Placeholder Two">
+						</div>
+						<div class="pj-slide">
+							<img src=""media/placeholder-three.png" alt="Placeholder Three">
+						</div>
+						<button class="pj-arrow pj-arrow--prev" type="button" aria-label="Previous image">
+							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+								<polyline points="10,3 5,8 10,13"/>
+							</svg>
+						</button>
+						<button class="pj-arrow pj-arrow--next" type="button" aria-label="Next image">
+							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+								<polyline points="6,3 11,8 6,13"/>
+							</svg>
+						</button>
+					</div>
+					<p class="pj-count">1 / 3</p>
+				</div>
+				<div class="pj-facts">
+					<div>
+						<span class="pill pill--source pill--open">Open Source</span>
+					</div>
+ 
+					<div>
+						<p class="pj-label">Details</p>
+						<dl class="pj-specs">
+							<dt>Role</dt><dd>Placeholder role</dd>
+							<dt>Team</dt><dd>Placeholder team size</dd>
+							<dt>Status</dt><dd>Placeholder status</dd>
+							<dt>Timeline</dt><dd>Feb 2025 &ndash; Apr 2025</dd>
+						</dl>
+					</div>
+ 
+					<div>
+						<p class="pj-label">Links</p>
+						<div class="pj-links">
+							<a class="pj-link" href="#" target="_blank" rel="noopener">Live demo <span>&#8599;</span></a>
+							<a class="pj-link" href="#" target="_blank" rel="noopener">GitHub repo <span>&#8599;</span></a>
+							<a class="pj-link" href="#" target="_blank" rel="noopener">Devpost <span>&#8599;</span></a>
+						</div>
+					</div>
+					<div>
+						<p class="pj-label">Built with</p>
+						<ul class="pills">
+							<li class="pill">Flutter</li>
+							<li class="pill">FastAPI</li>
+							<li class="pill">SQL Lite</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<details class="pj-section" open>
+				<summary>
+					Description
+					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
+				</summary>
+				<div class="pj-prose">
+					<p>Placeholder: what the project is and what problem it solves.</p>
+					<p>Placeholder: why you built it and who it was for.</p>
+					<p>Placeholder: how it works &mdash; architecture, key technical decisions, anything you had to solve that wasn't obvious.</p>
+				</div>
+			</details>
+ 
+			<details class="pj-section">
+				<summary>
+					Inspiration
+					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
+				</summary>
+				<div class="pj-prose">
+					<p>Placeholder: where the idea came from.</p>
+				</div>
+			</details>
+ 
+			<details class="pj-section">
+				<summary>
+					Accomplishments
+					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
+				</summary>
+				<div class="pj-prose">
+					<p>Placeholder: outcomes, numbers, awards, what you'd do differently.</p>
+				</div>
+			</details>
+			<details class="pj-section">
+				<summary>
+					Links & Sources
+					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
+				</summary>
+				<div class="pj-prose">
+					<p>Placeholder: <a href="#">dataset source</a>, <a href="#">reference tutorial</a>, <a href="#">API docs</a>, anything else worth crediting.</p>
+				</div>
+			</details>
+		</div>
+	</dialog>
 
 	<script src="js/main.js"></script>
 
