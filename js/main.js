@@ -1,9 +1,9 @@
-const root = document.documentElement;
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const root = document.documentElement;
 
 // ---------- Theme toggle ----------
-// the initial class is set by the inline script in <head>; this only
-// handles clicks. it never READS localStorage - two readers would drift.
+// the initial class is set by the inline script in <head>, before first paint.
+// this only handles clicks - it never READS localStorage, or the two would drift
 const themeToggle = document.getElementById("themeToggle");
 
 function setTheme(dark) {
@@ -90,163 +90,173 @@ if (!reduceMotion) {
 }
 
 
-// a silent video failure looks identical to a working poster, so say so
-document.querySelectorAll("video").forEach(v => {
-  v.addEventListener("error", () => console.warn(
-    "Video failed:", v.currentSrc || v.src,
-    "- MediaError code", v.error && v.error.code,
-    "(4 = missing file or unsupported codec)"
-  ));
+// ---------- Carousels ----------
+function updateCarousel(carousel) {
+  const track = carousel.querySelector(".pj-track");
+  const width = track.clientWidth;
+  if (!width) return; // still hidden inside a closed dialog
+
+  const max = track.scrollWidth - width;
+  carousel.querySelector(".pj-arrow--prev").hidden = track.scrollLeft <= 1;
+  carousel.querySelector(".pj-arrow--next").hidden = track.scrollLeft >= max - 1;
+  carousel.querySelector(".pj-count").textContent =
+    `${Math.round(track.scrollLeft / width) + 1} / ${track.children.length}`;
+}
+
+document.querySelectorAll(".pj-carousel").forEach(carousel => {
+  const track = carousel.querySelector(".pj-track");
+  if (track.children.length < 2) {
+    carousel.classList.add("is-single"); // no arrows, no counter
+    return;
+  }
+
+  const step = () => track.clientWidth;
+  carousel.querySelector(".pj-arrow--prev")
+    .addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+  carousel.querySelector(".pj-arrow--next")
+    .addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+  track.addEventListener("scroll", () => updateCarousel(carousel), { passive: true });
+
+  // click-and-drag for mice. touch is skipped on purpose - the browser's own
+  // scrolling is smoother than anything reproduced here
+  let startX = 0, startScroll = 0, dragging = false;
+
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "touch") return;
+    dragging = true;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add("is-dragging");
+    track.setPointerCapture(e.pointerId);
+  });
+
+  track.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    track.scrollLeft = startScroll - (e.clientX - startX);
+  });
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    track.classList.remove("is-dragging");
+    const w = track.clientWidth;
+    track.scrollTo({ left: Math.round(track.scrollLeft / w) * w, behavior: "smooth" });
+  }
+
+  track.addEventListener("pointerup", endDrag);
+  track.addEventListener("pointercancel", endDrag);
 });
 
 
 // ---------- Project dialogs ----------
-// <dialog>.showModal() gives us the focus trap, Escape-to-close, background
-// inert-ing and focus restore for free. We only add: click-outside, scroll
-// lock, and URL sync.
-let suppressHistory = false;
-
-function openProject(id, push = true) {
-  const dlg = document.getElementById("pj-" + id);
-  if (!dlg || dlg.open) return;
-  dlg.showModal();
+function openDialog(dialog) {
+  dialog.showModal();
   root.classList.add("modal-open");
-  initCarousels(dlg); // must run AFTER open - widths are 0 while display:none
-  // same JS-driven play as the card hover preview, which is the path we know works
-  if (!reduceMotion) dlg.querySelectorAll("video").forEach(v => v.play().catch(() => {}));
-  // same behaviour as the card previews: muted, looping, no controls.
-  // driven from JS because the autoplay attribute is unreliable on an
-  // element that was display:none until this instant.
-  if (!reduceMotion) dlg.querySelectorAll("video").forEach(v => v.play().catch(() => {}));
-  if (push) history.pushState({ project: id }, "", "#p-" + id);
+  dialog.querySelectorAll("video").forEach(v => v.play().catch(() => {}));
+  dialog.querySelectorAll(".pj-carousel").forEach(updateCarousel);
+  if (history.state?.project !== dialog.id) {
+    history.pushState({ project: dialog.id }, "", "#" + dialog.id);
+  }
 }
 
-document.querySelectorAll(".card-open").forEach(btn => {
-  btn.addEventListener("click", () => openProject(btn.dataset.project));
-});
+document.querySelectorAll(".card-open[data-project]").forEach(button => {
+  const dialog = document.getElementById(button.dataset.project);
+  if (!dialog) return;
 
-document.querySelectorAll(".pj").forEach(dlg => {
-  // a click whose target IS the dialog element landed on the backdrop,
-  // because .pj-header and .pj-body cover everything inside
-  dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  button.addEventListener("click", () => openDialog(dialog));
 
-  // close button, Escape and backdrop all funnel through this one event
-  dlg.addEventListener("close", () => {
+  // a click whose target IS the dialog element came from the backdrop
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  dialog.querySelector(".pj-close").addEventListener("click", () => dialog.close());
+
+  // fires for the X, the backdrop AND the Esc key, so cleanup lives here once
+  dialog.addEventListener("close", () => {
     root.classList.remove("modal-open");
-    dlg.querySelectorAll("video").forEach(v => v.pause());
-    if (!suppressHistory && history.state && history.state.project) history.back();
-    suppressHistory = false;
+    dialog.querySelectorAll("video").forEach(v => { v.pause(); v.currentTime = 0; });
+    if (history.state?.project === dialog.id) history.back();
   });
 });
 
-// back button closes the dialog instead of leaving the page
+// back button closes an open dialog instead of leaving the page
 window.addEventListener("popstate", () => {
-  const open = document.querySelector(".pj[open]");
-  if (open) { suppressHistory = true; open.close(); return; }
-  if (location.hash.startsWith("#p-")) openProject(location.hash.slice(3), false);
+  const open = document.querySelector("dialog[open]");
+  if (open) open.close();
 });
 
-// deep link: krishlenka.github.io/#p-learntrack opens straight to that project
-if (location.hash.startsWith("#p-")) openProject(location.hash.slice(3), false);
-
-
-// ---------- Carousel ----------
-function initCarousels(scope) {
-  scope.querySelectorAll(".pj-carousel").forEach(car => {
-    const track  = car.querySelector(".pj-track");
-    const slides = track.children.length;
-    const prev   = car.querySelector(".pj-arrow--prev");
-    const next   = car.querySelector(".pj-arrow--next");
-    const count  = car.parentElement.querySelector(".pj-count"); // sibling, not a child
-
-    // one slide means no arrows at all, and nothing else to wire up
-    if (slides < 2) {
-      if (prev) prev.hidden = true;
-      if (next) next.hidden = true;
-      if (count) count.hidden = true;
-      return;
-    }
-
-    const update = () => {
-      const max = track.scrollWidth - track.clientWidth;
-      prev.hidden = track.scrollLeft <= 1;          // hidden at the start
-      next.hidden = track.scrollLeft >= max - 1;    // hidden at the end
-      if (count) {
-        const i = Math.round(track.scrollLeft / track.clientWidth) + 1;
-        count.textContent = `${i} / ${slides}`;
-      }
-    };
-
-    if (car.dataset.ready) { update(); return; } // reopened - just refresh arrows
-    car.dataset.ready = "1";
-
-    track.addEventListener("scroll", update, { passive: true });
-    prev.addEventListener("click", () => track.scrollBy({ left: -track.clientWidth, behavior: "smooth" }));
-    next.addEventListener("click", () => track.scrollBy({ left:  track.clientWidth, behavior: "smooth" }));
-
-    // click-and-drag for mice. touch already scrolls natively, and hijacking
-    // it would break the momentum and snapping the browser does better.
-    // NOTE the 6px threshold: below it we never capture the pointer, so a plain
-    // click still reaches the video controls underneath.
-    let pending = false, dragging = false, startX = 0, startScroll = 0;
-
-    track.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "touch") return;
-      pending = true;
-      startX = e.clientX;
-      startScroll = track.scrollLeft;
-    });
-
-    track.addEventListener("pointermove", (e) => {
-      if (!pending) return;
-      const dx = e.clientX - startX;
-      if (!dragging) {
-        if (Math.abs(dx) < 6) return;   // still a click, not a drag
-        dragging = true;
-        track.setPointerCapture(e.pointerId);
-        track.classList.add("is-dragging");
-      }
-      track.scrollLeft = startScroll - dx;
-    });
-
-    const endDrag = () => {
-      pending = false;
-      if (!dragging) return;
-      dragging = false;
-      track.classList.remove("is-dragging");
-      // re-snap to the nearest slide now that snapping is back on
-      track.scrollTo({ left: Math.round(track.scrollLeft / track.clientWidth) * track.clientWidth, behavior: "smooth" });
-    };
-
-    track.addEventListener("pointerup", endDrag);
-    track.addEventListener("pointercancel", endDrag);
-
-    update();
-  });
+// someone arrived on a shared #project-xyz link
+if (location.hash.startsWith("#project-")) {
+  const dialog = document.getElementById(location.hash.slice(1));
+  if (dialog?.tagName === "DIALOG") openDialog(dialog);
 }
+
+
+// ---------- Copy to clipboard + toast ----------
+const TOAST_MS = 3000;
+const toast = document.getElementById("toast");
+let toastTimer;
+
+// keeps the CSS countdown bar and the JS timer on one number
+toast.style.setProperty("--toast-ms", TOAST_MS + "ms");
+
+function showToast(message) {
+  toast.querySelector(".toast-text").textContent = message;
+  toast.classList.remove("is-visible");
+  void toast.offsetWidth; // forces a reflow so the bar animation restarts
+  toast.classList.add("is-visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("is-visible"), TOAST_MS);
+}
+
+document.querySelectorAll("[data-copy-user]").forEach(el => {
+  el.addEventListener("click", async () => {
+    const address = `${el.dataset.copyUser}@${el.dataset.copyDomain}`;
+    try {
+      await navigator.clipboard.writeText(address);
+      showToast("Copied to clipboard");
+    } catch (e) {
+      // clipboard is blocked (insecure context, or the user denied it):
+      // fall back to opening their mail app rather than failing silently
+      window.location.href = "mailto:" + address;
+    }
+  });
+});
+
+
 
 /** NOTES
  *
- * document = browser's representation of the HTML page
+ * <dialog>.showModal() = opens in the browser's "top layer". gives focus
+ *   trapping, Esc-to-close and an inert background with no extra code.
+ *   dialog.close() fires a "close" event no matter how it was closed.
+ *
+ * ::backdrop = the dimmed area behind an open modal dialog
+ *
+ * <details>/<summary> = native collapsible section, no JS needed
+ *
+ * scroll-snap-type: x mandatory = native swipe-between-slides on touch
+ *
+ * setPointerCapture = keeps sending pointer events to this element even if
+ *   the cursor leaves it, so a drag doesn't break when you overshoot
+ *
+ * history.pushState = changes the URL without loading a page.
+ *   "popstate" fires when the user hits back
+ *
+ * element.dataset.project = reads the data-project="" attribute off the tag
  *
  * .querySelector()    = find the FIRST element matching a CSS selector
  * .querySelectorAll() = find ALL matching elements, returns a NodeList
  *                       (NodeList has .forEach but NOT .addEventListener)
- * .getElementById()   = find by id="" attribute on the tag
  *
- * .addEventListener("click", ...) = watch this element for a click, then run the following code
- * () => { ... } is an arrow function, a shorter way to write function() { ... }
+ * IntersectionObserver = a browser API that watches when elements enter or
+ *   leave the viewport
  *
- * .classList.toggle("active") = add the "active" class if absent, remove it if present
+ * matchMedia("(prefers-reduced-motion: reduce)") = reads the OS "reduce
+ *   motion" accessibility setting
  *
- * element.dataset.subs = reads the data-subs="" attribute off the tag
+ * navigator.clipboard.writeText = copies text. only works on https or
+ *   localhost, so it will fail if you open index.html straight from disk
  *
- * setInterval(fn, ms)  = run fn repeatedly every ms until clearInterval() stops it
- * setTimeout(fn, ms)   = run fn once, after ms milliseconds
- *
- * IntersectionObserver = a browser API that watches when elements enter or leave the viewport
- *
- * matchMedia("(prefers-reduced-motion: reduce)") = reads the OS "reduce motion"
- *   accessibility setting, so animations can be skipped for users who asked for that
- *
+ * void el.offsetWidth = reads a layout property purely to force the browser
+ *   to flush pending style changes, so removing then re-adding a class
+ *   restarts its animation instead of being collapsed into a no-op
  */

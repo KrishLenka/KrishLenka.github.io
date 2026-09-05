@@ -26,9 +26,11 @@ Sections (scrollable):
 
 - If going with pop-up idea, keep an "x" on top left to go back to projects section/archive. Also black out area outside of pop up so even if someone clicks any area outside pop-up, the pop-up will close and go back to main page. Add a button on top right to redirect to new page (new pages help with SEO, organization, etc). Note: project header should be fixed (project title, "x" symbol on top left, redirect button)
 
-- Below 3-4 main projects (in the projects section), have a pill button labeled "Projects Archive". Pill is automatically "unfilled" (color is same as main background). When cursor hovers, there is a subtle hover fill.
+- Below 3-4 main projects (in the projects section), have a pill button labeled "Projects Archive". Pill has the same cursor response as the card hover (outline becomes red and opacity changes)
 
-- Redirects to new page with all projects I've made and put on this website (Think of how you want user to go back to main page)
+- Redirects to new page with all projects I've made and put on this website
+- The new page will still have the navigation header. I'll let you decide based on logic whether the projects nav should be underlined or not. But if any of them are clicked then the page redirects to the main page.
+- Let's also have a small arrow pointing to the left on the top left just under the nav bar with some text saying "return to main page". The user can click this to go back to the main page with my 3-4 main projects. This page will basically have the previous 3-4 main project cards + more project cards. They all have the same pop up feature.
 
 Experiences Section:
 - This will be like a vertical timeline, ranging from most recent experience to oldest work experience (Columbia research project or Quakerbridge)

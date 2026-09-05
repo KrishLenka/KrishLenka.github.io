@@ -5,9 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Krish Lenka</title>
 
-	<link rel="stylesheet" href="css/styles.css">
-
 	<script>
+		// runs before first paint so returning visitors never see a flash of the wrong theme
 		try {
 			if (localStorage.getItem("theme") === "dark") {
 				document.documentElement.classList.add("dark");
@@ -15,6 +14,7 @@
 		} catch (e) {}
 	</script>
 
+	<link rel="stylesheet" href="css/styles.css">
 	<link rel="icon" href="media/favicon.ico" sizes="32x32">
 	<link rel="icon" href="media/favicon.svg" type="image/svg+xml">
 	<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
@@ -25,23 +25,18 @@
 	<!-- Header -->
 	<header class="header">
 		<div class="header-left">
-			<a href="https://github.com/KrishLenka" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-				<svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-			</a>
-			<a href="https://www.linkedin.com/in/krishlenka/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-			</a>
+			<a href="https://github.com/KrishLenka" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+			<a href="https://www.linkedin.com/in/krishlenka/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
 			<a class="header-cta" href="/Krish_Lenka_Resume.pdf" target="_blank" rel="noopener">Resume</a>
 		</div>
 		<nav class="header-middle" aria-label="Primary">
-			<a href="./"	data-section="hero">About Me</a>
+			<a href="./" data-section="hero">About Me</a>
 			<a href="#projects" data-section="projects">Projects</a>
 			<a href="#experience" data-section="experience">Experience</a>
 			<a href="#contact" data-section="contact">Contact</a>
 		</nav>
 		<div class="header-right">
-			<button class="theme-toggle" id="themeToggle" type="button"
-					aria-label="Toggle dark mode" aria-pressed="false">
+			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
 				<div class="toggle-track"><div class="toggle-thumb"></div></div>
 			</button>
 		</div>
@@ -50,14 +45,65 @@
 	<main class="main-content" id="mainContent">
 		<section class="section hero" id="hero">
 			<hr class="grid-rule">
-			<div class="section-body">
-				<h1 class="display">
-					KRISH LENKA
-				</h1>
+			<div class="section-body section-body--wide">
+				<h1 class="display">KRISH LENKA</h1>
 				<div class="hero-sub" data-subs="Computer Science Student|Software Engineer|AI &amp; ML Engineer|Mobile App Developer">
 					<span class="sub-text" aria-hidden="true">Computer Science Student</span>
 				</div>
 				<p class="other-titles">Computer science student, software engineer, AI and ML engineer, mobile app developer.</p>
+
+				<div class="about">
+					<figure class="about-photo">
+						<!-- drop your portrait in here: <img src="media/portrait.jpg" alt="Krish Lenka"> -->
+					</figure>
+
+					<div class="about-text">
+						<p>Placeholder. One or two sentences on who you are and what you build — the thing
+							someone should remember thirty seconds after closing the tab.</p>
+						<p>Placeholder. What you are looking for right now, and when you are available.</p>
+						<p>Placeholder. One line that is not about work.</p>
+
+						<div class="skills">
+							<div class="skill-group">
+								<span class="skill-label">Languages</span>
+								<ul class="pills">
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+								</ul>
+							</div>
+							<div class="skill-group">
+								<span class="skill-label">Frameworks</span>
+								<ul class="pills">
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+								</ul>
+							</div>
+							<div class="skill-group">
+								<span class="skill-label">Data &amp; AI</span>
+								<ul class="pills">
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+								</ul>
+							</div>
+							<div class="skill-group">
+								<span class="skill-label">Tools</span>
+								<ul class="pills">
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+									<li class="pill">Placeholder</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="about-cta">
+					<a class="btn btn--lg btn--primary" href="/Krish_Lenka_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
+				</div>
 			</div>
 		</section>
 
@@ -69,59 +115,49 @@
 				<div class="card-grid">
 
 					<article class="card">
-						<h3 class="card-title">LearnTrack
-							<button class="card-open" type="button" data-project="learntrack">
-								LearnTrack
-							</button>
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="project-learntrack" aria-haspopup="dialog">LearnTrack</button>
 						</h3>
 						<p class="card-date">Feb 2025 - Apr 2025</p>
 						<div class="card-thumb">
-							<video
-								src="media/LearnTrackDemo.mp4"
-								poster="media/LearnTrack.png"
-								muted loop playsinline
-								preload="none"
-								aria-hidden="true"></video>
+							<video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" muted loop playsinline preload="none" aria-hidden="true"></video>
 						</div>
-						<p class="card-desc">
-							An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.
-						</p>
+						<p class="card-desc">An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.</p>
 						<ul class="pills card-tags">
-							<li class="pill">Flutter</li>
-							<li class="pill">FastAPI</li>
-							<li class="pill">SQL Lite</li>
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
 						</ul>
 					</article>
 
 					<article class="card">
 						<h3 class="card-title">
-							<button class="card-open" type="button" data-project="placeholder-two">Project Title</button>
+							<button class="card-open" type="button" data-project="project-two" aria-haspopup="dialog">Project Title</button>
 						</h3>
 						<p class="card-date">Aug 2026 - Present</p>
 						<div class="card-thumb"></div>
-						<p class="card-desc">
-							Short description of project.
-						</p>
+						<p class="card-desc">Short description of project.</p>
 						<ul class="pills card-tags">
 							<li class="pill">Tool One</li>
 							<li class="pill">Tool Two</li>
 							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
 						</ul>
 					</article>
 
 					<article class="card">
-						<h3 class="card-title">Project Title
-							<button class="card-open" type="button" data-project="placeholder-three">Project Title</button>
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="project-three" aria-haspopup="dialog">Project Title</button>
 						</h3>
 						<p class="card-date">Aug 2026 - Present</p>
 						<div class="card-thumb"></div>
-						<p class="card-desc">
-							Short description of project.
-						</p>
+						<p class="card-desc">Short description of project.</p>
 						<ul class="pills card-tags">
 							<li class="pill">Tool One</li>
 							<li class="pill">Tool Two</li>
 							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
 						</ul>
 					</article>
 
@@ -131,132 +167,503 @@
 
 		<section class="section" id="experience">
 			<hr class="grid-rule">
-			<div class="section-body">
+			<div class="section-body section-body--wide">
 				<h2 class="display display--section">EXPERIENCE</h2>
+
+				<ol class="timeline">
+					<li class="tl-era">
+						<p class="tl-when">2025 &ndash; Present</p>
+						<div class="tl-items">
+							<article class="tl-item tl-entry">
+								<div class="tl-head">
+									<span class="tl-role">Placeholder Role</span>
+									<span class="tl-org">Placeholder Organization &middot; Sep 2025 &ndash; Present</span>
+								</div>
+								<div class="tl-body">
+									<ul class="tl-points">
+										<li>Placeholder bullet: what you built or owned, with the impact attached.</li>
+										<li>Placeholder bullet: a technical detail worth naming.</li>
+										<li>Placeholder bullet: something measurable if you have it.</li>
+									</ul>
+									<ul class="pills">
+										<li class="pill">Tool One</li>
+										<li class="pill">Tool Two</li>
+										<li class="pill">Tool Three</li>
+									</ul>
+								</div>
+							</article>
+						</div>
+					</li>
+					<li class="tl-era">
+						<p class="tl-when">2025</p>
+						<div class="tl-items">
+							<details class="disclosure tl-collapse">
+								<summary>
+									<div class="tl-head">
+										<span class="tl-role">Software Engineering Intern</span>
+										<span class="tl-org">Honeywell Life Sciences &middot; Jun 2025 &ndash; Aug 2025</span>
+									</div>
+									<svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+								</summary>
+								<div class="tl-body">
+									<ul class="tl-points">
+										<li>Placeholder bullet: what you built or owned, with the impact attached.</li>
+										<li>Placeholder bullet: a technical detail worth naming.</li>
+										<li>Placeholder bullet: something measurable if you have it.</li>
+									</ul>
+									<ul class="pills">
+										<li class="pill">Tool One</li>
+										<li class="pill">Tool Two</li>
+										<li class="pill">Tool Three</li>
+									</ul>
+								</div>
+							</details>
+						</div>
+					</li>
+					<li class="tl-era">
+						<p class="tl-when">2023 &ndash; 2024</p>
+						<div class="tl-items">
+							<details class="disclosure tl-collapse">
+								<summary>
+									<div class="tl-head">
+										<span class="tl-role">Placeholder Role</span>
+										<span class="tl-org">Placeholder Organization &middot; 2023 &ndash; 2024</span>
+									</div>
+									<svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+								</summary>
+								<div class="tl-body">
+									<ul class="tl-points">
+										<li>Placeholder bullet: what you built or owned, with the impact attached.</li>
+										<li>Placeholder bullet: a technical detail worth naming.</li>
+										<li>Placeholder bullet: something measurable if you have it.</li>
+									</ul>
+									<ul class="pills">
+										<li class="pill">Tool One</li>
+										<li class="pill">Tool Two</li>
+										<li class="pill">Tool Three</li>
+									</ul>
+								</div>
+							</details>
+						</div>
+					</li>
+				</ol>
+
+				<details class="disclosure tl-older">
+					<summary>Older experience <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+					<div class="tl-older-body">
+						<ol class="timeline" style="margin-top:0">
+							<li class="tl-era">
+								<p class="tl-when">2022</p>
+								<div class="tl-items">
+									<details class="disclosure tl-collapse">
+										<summary>
+											<div class="tl-head">
+												<span class="tl-role">Placeholder Role</span>
+												<span class="tl-org">Placeholder Organization &middot; 2022</span>
+											</div>
+											<svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+										</summary>
+										<div class="tl-body">
+											<ul class="tl-points">
+												<li>Placeholder bullet: what you built or owned, with the impact attached.</li>
+												<li>Placeholder bullet: a technical detail worth naming.</li>
+												<li>Placeholder bullet: something measurable if you have it.</li>
+											</ul>
+											<ul class="pills">
+												<li class="pill">Tool One</li>
+												<li class="pill">Tool Two</li>
+												<li class="pill">Tool Three</li>
+											</ul>
+										</div>
+									</details>
+								</div>
+							</li>
+							<li class="tl-era">
+								<p class="tl-when">2020 &ndash; 2021</p>
+								<div class="tl-items">
+									<details class="disclosure tl-collapse">
+										<summary>
+											<div class="tl-head">
+												<span class="tl-role">Placeholder Role</span>
+												<span class="tl-org">Placeholder Organization &middot; 2020 &ndash; 2021</span>
+											</div>
+											<svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+										</summary>
+										<div class="tl-body">
+											<ul class="tl-points">
+												<li>Placeholder bullet: what you built or owned, with the impact attached.</li>
+												<li>Placeholder bullet: a technical detail worth naming.</li>
+												<li>Placeholder bullet: something measurable if you have it.</li>
+											</ul>
+											<ul class="pills">
+												<li class="pill">Tool One</li>
+												<li class="pill">Tool Two</li>
+												<li class="pill">Tool Three</li>
+											</ul>
+										</div>
+									</details>
+								</div>
+							</li>
+						</ol>
+					</div>
+				</details>
 			</div>
 		</section>
 
 		<section class="section" id="contact">
 			<hr class="grid-rule">
-			<div class="section-body">
+			<div class="section-body section-body--wide">
 				<h2 class="display display--section">CONTACT</h2>
+
+				<ul class="contact-list">
+					<li>
+						<!-- the address is assembled from these two parts at click time, so it
+						     never appears as a complete string anywhere in the markup -->
+						<button class="contact-row" type="button"
+								data-copy-user="krishlenka2825" data-copy-domain="gmail.com">
+							<span class="contact-key">email:</span>
+							<span class="contact-val">krishlenka2825 [at] gmail [dot] com</span>
+							<svg class="contact-copy" width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="1"/><path d="M9.5 2.5 h-7 v7" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+						</button>
+					</li>
+					<li>
+						<a class="contact-row" href="https://github.com/KrishLenka" target="_blank" rel="noopener noreferrer">
+							<span class="contact-key">github:</span>
+							<span class="contact-val">@KrishLenka</span>
+						</a>
+					</li>
+					<li>
+						<a class="contact-row" href="https://www.linkedin.com/in/krishlenka/" target="_blank" rel="noopener noreferrer">
+							<span class="contact-key">linkedin:</span>
+							<span class="contact-val">@krishlenka</span>
+						</a>
+					</li>
+				</ul>
 			</div>
 		</section>
 
 	</main>
 
+	<!-- Dialogs live outside the cards: a <dialog> renders in the browser's top
+	     layer wherever it sits in the DOM, and keeping it out of .card stops
+	     clicks inside it bubbling back up to the card's own handler -->
 
-	<!-- Project Pop Up (copy below) -->
-	<dialog class="pj" id="pj-learntrack" aria-labelledby="pj-learntrack-title">
-		<div class="pj-header">
-			<h2 class="pj-title" id="pj-learntrack-title">LearnTrack</h2>
-			<button class="pj-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">
-				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-					<line x1="5" y1="5" x2="15" y2="15"/><line x1="15" y1="5" x2="5" y2="15"/>
-				</svg>
-			</button>
-		</div>
-		<div class="pj-body">
-			<div class="pj-top">
-				<div class="pj-carousel">
-					<div class="pj-track">
-						<div class="pj-slide">
-							<video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" control muted loop playsinline preload="metadata"></video>
+			<dialog class="pj" id="project-learntrack" aria-labelledby="learntrack-title">
+				<header class="pj-header">
+					<h2 class="pj-title" id="learntrack-title">LearnTrack</h2>
+					<button class="pj-close" type="button" aria-label="Close project details">
+						<svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+					</button>
+				</header>
+
+				<div class="pj-body">
+					<div class="pj-top">
+						<div class="pj-carousel">
+							<div class="pj-frame">
+								<div class="pj-track">
+									<figure class="pj-slide"><video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" muted loop playsinline preload="none" aria-label="LearnTrack demo"></video></figure>
+									<figure class="pj-slide"><img src="media/LearnTrack.png" alt="Placeholder screenshot"></figure>
+									<figure class="pj-slide"><img src="media/LearnTrack.png" alt="Placeholder screenshot"></figure>
+								</div>
+								<button class="pj-arrow pj-arrow--prev" type="button" aria-label="Previous image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2 L3.5 6 L7.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+								<button class="pj-arrow pj-arrow--next" type="button" aria-label="Next image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2 L8.5 6 L4.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+							</div>
+							<p class="pj-count">1 / 3</p>
 						</div>
-						<div class="pj-slide">
-							<img src=""media/placeholder-two.png" alt="Placeholder Two">
-						</div>
-						<div class="pj-slide">
-							<img src=""media/placeholder-three.png" alt="Placeholder Three">
-						</div>
-						<button class="pj-arrow pj-arrow--prev" type="button" aria-label="Previous image">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-								<polyline points="10,3 5,8 10,13"/>
-							</svg>
-						</button>
-						<button class="pj-arrow pj-arrow--next" type="button" aria-label="Next image">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-								<polyline points="6,3 11,8 6,13"/>
-							</svg>
-						</button>
-					</div>
-					<p class="pj-count">1 / 3</p>
-				</div>
-				<div class="pj-facts">
-					<div>
-						<span class="pill pill--source pill--open">Open Source</span>
-					</div>
- 
-					<div>
-						<p class="pj-label">Details</p>
-						<dl class="pj-specs">
-							<dt>Role</dt><dd>Placeholder role</dd>
-							<dt>Team</dt><dd>Placeholder team size</dd>
-							<dt>Status</dt><dd>Placeholder status</dd>
-							<dt>Timeline</dt><dd>Feb 2025 &ndash; Apr 2025</dd>
-						</dl>
-					</div>
- 
-					<div>
-						<p class="pj-label">Links</p>
-						<div class="pj-links">
-							<a class="pj-link" href="#" target="_blank" rel="noopener">Live demo <span>&#8599;</span></a>
-							<a class="pj-link" href="#" target="_blank" rel="noopener">GitHub repo <span>&#8599;</span></a>
-							<a class="pj-link" href="#" target="_blank" rel="noopener">Devpost <span>&#8599;</span></a>
+
+						<div class="pj-facts">
+							<div><span class="pill pill--source pill--open">Open source</span></div>
+
+							<div>
+								<p class="pj-label">Details</p>
+								<dl class="pj-specs">
+									<dt>Role</dt><dd>Placeholder role</dd>
+									<dt>Team</dt><dd>Placeholder team size</dd>
+									<dt>Timeline</dt><dd>Placeholder dates</dd>
+									<dt>Status</dt><dd>Placeholder status</dd>
+								</dl>
+							</div>
+
+							<div>
+								<p class="pj-label">Links</p>
+								<div class="pj-links">
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Live demo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">GitHub repo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Placeholder link <span>&#8599;</span></a>
+								</div>
+							</div>
+
+							<div>
+								<p class="pj-label">Built with</p>
+								<ul class="pills">
+									<li class="pill">Tool One</li>
+									<li class="pill">Tool Two</li>
+									<li class="pill">Tool Three</li>
+									<li class="pill">Tool Four</li>
+									<li class="pill">Tool Five</li>
+									<li class="pill">Tool Six</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-					<div>
-						<p class="pj-label">Built with</p>
-						<ul class="pills">
-							<li class="pill">Flutter</li>
-							<li class="pill">FastAPI</li>
-							<li class="pill">SQL Lite</li>
-						</ul>
+
+					<details class="disclosure pj-section" open>
+						<summary>Description <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>LearnTrack is a cross-platform Flutter app that generates personalized learning
+								paths using Google's Gemini API. You give it a topic and it returns a structured
+								curriculum of modules, lessons, and real linked resources, then tracks your progress
+								through it with a built-in Pomodoro timer and a daily streak system.</p>
+							<p>Placeholder. Your specific role if it was a team project.</p>
+							<p>Placeholder. How it works: architecture, key technical decisions, tradeoffs.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Inspiration <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. What prompted the idea.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Challenges &amp; What I Learned <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. Hardest problem and how you solved it.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Accomplishments <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li>Placeholder outcome with a number attached.</li>
+								<li>Placeholder outcome with a number attached.</li>
+							</ul>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Links &amp; Sources <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li><a href="#">Placeholder dataset or API</a></li>
+								<li><a href="#">Placeholder Devpost or writeup</a></li>
+							</ul>
+						</div>
+					</details>
+				</div>
+			</dialog>
+
+			<dialog class="pj" id="project-two" aria-labelledby="two-title">
+				<header class="pj-header">
+					<h2 class="pj-title" id="two-title">Project Title</h2>
+					<button class="pj-close" type="button" aria-label="Close project details">
+						<svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+					</button>
+				</header>
+
+				<div class="pj-body">
+					<div class="pj-top">
+						<div class="pj-carousel">
+							<div class="pj-frame">
+								<div class="pj-track">
+									<figure class="pj-slide"></figure>
+								</div>
+								<button class="pj-arrow pj-arrow--prev" type="button" aria-label="Previous image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2 L3.5 6 L7.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+								<button class="pj-arrow pj-arrow--next" type="button" aria-label="Next image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2 L8.5 6 L4.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+							</div>
+							<p class="pj-count">1 / 1</p>
+						</div>
+
+						<div class="pj-facts">
+							<div><span class="pill pill--source pill--closed">Closed source</span></div>
+
+							<div>
+								<p class="pj-label">Details</p>
+								<dl class="pj-specs">
+									<dt>Role</dt><dd>Placeholder role</dd>
+									<dt>Team</dt><dd>Placeholder team size</dd>
+									<dt>Timeline</dt><dd>Placeholder dates</dd>
+									<dt>Status</dt><dd>Placeholder status</dd>
+								</dl>
+							</div>
+
+							<div>
+								<p class="pj-label">Links</p>
+								<div class="pj-links">
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Live demo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">GitHub repo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Placeholder link <span>&#8599;</span></a>
+								</div>
+							</div>
+
+							<div>
+								<p class="pj-label">Built with</p>
+								<ul class="pills">
+									<li class="pill">Tool One</li>
+									<li class="pill">Tool Two</li>
+									<li class="pill">Tool Three</li>
+									<li class="pill">Tool Four</li>
+									<li class="pill">Tool Five</li>
+									<li class="pill">Tool Six</li>
+								</ul>
+							</div>
+						</div>
 					</div>
+
+					<details class="disclosure pj-section" open>
+						<summary>Description <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. What the project is and the problem it solves.</p>
+							<p>Placeholder. Why it was built, and your specific role if it was a team project.</p>
+							<p>Placeholder. How it works: architecture, key technical decisions, tradeoffs.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Inspiration <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. What prompted the idea.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Challenges &amp; What I Learned <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. Hardest problem and how you solved it.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Accomplishments <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li>Placeholder outcome with a number attached.</li>
+								<li>Placeholder outcome with a number attached.</li>
+							</ul>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Links &amp; Sources <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li><a href="#">Placeholder dataset or API</a></li>
+								<li><a href="#">Placeholder Devpost or writeup</a></li>
+							</ul>
+						</div>
+					</details>
 				</div>
-			</div>
-			<details class="pj-section" open>
-				<summary>
-					Description
-					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
-				</summary>
-				<div class="pj-prose">
-					<p>Placeholder: what the project is and what problem it solves.</p>
-					<p>Placeholder: why you built it and who it was for.</p>
-					<p>Placeholder: how it works &mdash; architecture, key technical decisions, anything you had to solve that wasn't obvious.</p>
+			</dialog>
+
+			<dialog class="pj" id="project-three" aria-labelledby="three-title">
+				<header class="pj-header">
+					<h2 class="pj-title" id="three-title">Project Title</h2>
+					<button class="pj-close" type="button" aria-label="Close project details">
+						<svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+					</button>
+				</header>
+
+				<div class="pj-body">
+					<div class="pj-top">
+						<div class="pj-carousel">
+							<div class="pj-frame">
+								<div class="pj-track">
+									<figure class="pj-slide"></figure>
+								</div>
+								<button class="pj-arrow pj-arrow--prev" type="button" aria-label="Previous image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2 L3.5 6 L7.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+								<button class="pj-arrow pj-arrow--next" type="button" aria-label="Next image">
+									<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2 L8.5 6 L4.5 10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+								</button>
+							</div>
+							<p class="pj-count">1 / 1</p>
+						</div>
+
+						<div class="pj-facts">
+							<div><span class="pill pill--source pill--open">Open source</span></div>
+
+							<div>
+								<p class="pj-label">Details</p>
+								<dl class="pj-specs">
+									<dt>Role</dt><dd>Placeholder role</dd>
+									<dt>Team</dt><dd>Placeholder team size</dd>
+									<dt>Timeline</dt><dd>Placeholder dates</dd>
+									<dt>Status</dt><dd>Placeholder status</dd>
+								</dl>
+							</div>
+
+							<div>
+								<p class="pj-label">Links</p>
+								<div class="pj-links">
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Live demo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">GitHub repo <span>&#8599;</span></a>
+									<a class="pj-link" href="#" target="_blank" rel="noopener">Placeholder link <span>&#8599;</span></a>
+								</div>
+							</div>
+
+							<div>
+								<p class="pj-label">Built with</p>
+								<ul class="pills">
+									<li class="pill">Tool One</li>
+									<li class="pill">Tool Two</li>
+									<li class="pill">Tool Three</li>
+									<li class="pill">Tool Four</li>
+									<li class="pill">Tool Five</li>
+									<li class="pill">Tool Six</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<details class="disclosure pj-section" open>
+						<summary>Description <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. What the project is and the problem it solves.</p>
+							<p>Placeholder. Why it was built, and your specific role if it was a team project.</p>
+							<p>Placeholder. How it works: architecture, key technical decisions, tradeoffs.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Inspiration <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. What prompted the idea.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Challenges &amp; What I Learned <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<p>Placeholder. Hardest problem and how you solved it.</p>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Accomplishments <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li>Placeholder outcome with a number attached.</li>
+								<li>Placeholder outcome with a number attached.</li>
+							</ul>
+						</div>
+					</details>
+					<details class="disclosure pj-section">
+						<summary>Links &amp; Sources <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
+						<div class="pj-prose">
+							<ul>
+								<li><a href="#">Placeholder dataset or API</a></li>
+								<li><a href="#">Placeholder Devpost or writeup</a></li>
+							</ul>
+						</div>
+					</details>
 				</div>
-			</details>
- 
-			<details class="pj-section">
-				<summary>
-					Inspiration
-					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
-				</summary>
-				<div class="pj-prose">
-					<p>Placeholder: where the idea came from.</p>
-				</div>
-			</details>
- 
-			<details class="pj-section">
-				<summary>
-					Accomplishments
-					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
-				</summary>
-				<div class="pj-prose">
-					<p>Placeholder: outcomes, numbers, awards, what you'd do differently.</p>
-				</div>
-			</details>
-			<details class="pj-section">
-				<summary>
-					Links & Sources
-					<svg class="pj-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="4,6 8,10 12,6"/></svg>
-				</summary>
-				<div class="pj-prose">
-					<p>Placeholder: <a href="#">dataset source</a>, <a href="#">reference tutorial</a>, <a href="#">API docs</a>, anything else worth crediting.</p>
-				</div>
-			</details>
-		</div>
-	</dialog>
+			</dialog>
+
+	<!-- role="status" + aria-live means a screen reader announces the copy too -->
+	<div class="toast" id="toast" role="status" aria-live="polite">
+		<span class="toast-text"></span>
+		<span class="toast-bar"></span>
+	</div>
 
 	<script src="js/main.js"></script>
 
