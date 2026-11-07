@@ -16,6 +16,37 @@ themeToggle.setAttribute("aria-pressed", root.classList.contains("dark"));
 themeToggle.addEventListener("click", () => setTheme(!root.classList.contains("dark")));
 
 
+// ---------- Fade in on load and scroll ----------
+// the inline script in <head> adds .reveal-ready, which is what hides these.
+// without it (reduced motion, no JS) everything is simply visible
+if (root.classList.contains("reveal-ready")) {
+  const STAGGER_MS = 90;
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries
+      .filter(entry => entry.isIntersecting)
+      .forEach((entry, i) => {
+        // things that appear together cascade instead of arriving as one block
+        entry.target.style.transitionDelay = `${Math.min(i, 6) * STAGGER_MS}ms`;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+  }, { rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll("[data-reveal]").forEach(el => {
+    revealObserver.observe(el);
+
+    // hand the element back to its normal styles, so a leftover delay can't
+    // slow down hover effects later
+    el.addEventListener("transitionend", (e) => {
+      if (e.target !== el || e.propertyName !== "opacity") return;
+      el.removeAttribute("data-reveal");
+      el.style.transitionDelay = "";
+    });
+  });
+}
+
+
 // ---------- Subtitle typewriter ----------
 const heroSub  = document.querySelector(".hero-sub");
 const subText  = heroSub.querySelector(".sub-text");
@@ -66,15 +97,36 @@ const sectionObserver = new IntersectionObserver((entries) => {
       if (activeLink) activeLink.classList.add("is-active");
     }
   });
-}, { rootMargin: "-50% 0px -50% 0px" });
+}, { rootMargin: "-40% 0px -60% 0px" }); // #contact's min-height must stay above 60vh or it never reaches this line
 document.querySelectorAll(".section[id]").forEach(s => sectionObserver.observe(s));
 
-document.querySelector('.header-middle a[data-section="hero"]')
-  .addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0 });
-    history.replaceState(null, "", location.pathname);
-  });
+
+// ---------- Hamburger menu (small windows only, see the media query in styles.css) ----------
+const header = document.querySelector(".header");
+const navToggle = document.getElementById("navToggle");
+
+function setMenu(open) {
+  header.classList.toggle("menu-open", open);
+  navToggle.setAttribute("aria-expanded", open);
+  navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+}
+
+navToggle.addEventListener("click", () => setMenu(!header.classList.contains("menu-open")));
+navLinks.forEach(link => link.addEventListener("click", () => setMenu(false)));
+
+document.addEventListener("click", (e) => {
+  if (!header.contains(e.target)) setMenu(false);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && header.classList.contains("menu-open")) {
+    setMenu(false);
+    navToggle.focus();
+  }
+});
+
+// must match the breakpoint in styles.css
+matchMedia("(max-width: 900px)").addEventListener("change", () => setMenu(false));
 
 
 // ---------- Card thumbnails: play video on hover ----------
@@ -84,7 +136,7 @@ if (!reduceMotion) {
     card.addEventListener("mouseenter", () => video.play().catch(() => {}));
     card.addEventListener("mouseleave", () => {
       video.pause();
-      video.currentTime = 0;
+      video.load(); // back to the poster. currentTime = 0 would stay on the video's first frame
     });
   });
 }

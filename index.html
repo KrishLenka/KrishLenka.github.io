@@ -12,8 +12,16 @@
 				document.documentElement.classList.add("dark");
 			}
 		} catch (e) {}
+
+		// hides [data-reveal] elements until main.js fades them in
+		if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			document.documentElement.classList.add("reveal-ready");
+		}
 	</script>
 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
 	<link rel="stylesheet" href="css/styles.css">
 	<link rel="icon" href="media/favicon.ico" sizes="32x32">
 	<link rel="icon" href="media/favicon.svg" type="image/svg+xml">
@@ -25,153 +33,99 @@
 	<!-- Header -->
 	<header class="header">
 		<div class="header-left">
-			<a href="https://github.com/KrishLenka" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
-			<a href="https://www.linkedin.com/in/krishlenka/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-			<a class="header-cta" href="/Krish_Lenka_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+			<a href="https://github.com/KrishLenka" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+			<a href="https://www.linkedin.com/in/krishlenka/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+			<a class="btn" href="/Krish_Lenka_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
 		</div>
-		<nav class="header-middle" aria-label="Primary">
-			<a href="./" data-section="hero">About Me</a>
-			<a href="#projects" data-section="projects">Projects</a>
+		<nav class="header-middle" id="primaryNav" aria-label="Primary">
+			<a href="#about" data-section="about">About Me</a>
 			<a href="#experience" data-section="experience">Experience</a>
+			<a href="#projects" data-section="projects">Projects</a>
 			<a href="#contact" data-section="contact">Contact</a>
 		</nav>
 		<div class="header-right">
 			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
 				<div class="toggle-track"><div class="toggle-thumb"></div></div>
 			</button>
+			<button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+				<svg class="nav-toggle-open" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7 H20 M4 12 H20 M4 17 H20" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+				<svg class="nav-toggle-close" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 L18 18 M18 6 L6 18" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+			</button>
 		</div>
 	</header>
 
 	<main class="main-content" id="mainContent">
 		<section class="section hero" id="hero">
-			<hr class="grid-rule">
-			<div class="section-body section-body--wide">
-				<h1 class="display">KRISH LENKA</h1>
-				<div class="hero-sub" data-subs="Computer Science Student|Software Engineer|AI &amp; ML Engineer|Mobile App Developer">
-					<span class="sub-text" aria-hidden="true">Computer Science Student</span>
-				</div>
-				<p class="other-titles">Computer science student, software engineer, AI and ML engineer, mobile app developer.</p>
+			<img data-reveal class="hero-photo" src="media/portfolio%20pic.png" alt="Krish Lenka" width="233" height="233">
+			<h1 data-reveal class="hero-name">Krish Lenka</h1>
+			<div data-reveal class="hero-sub" data-subs="Computer Science Student|Software Engineer|AI &amp; ML Engineer">
+				<span class="sub-text" aria-hidden="true">Computer Science Student</span>
+			</div>
+			<p class="other-titles">Computer science student, software engineer, AI and ML engineer.</p>
+
+			<a data-reveal class="hero-arrow" href="#about" aria-label="Scroll to About Me">
+				<svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true"><path d="M2 2 L12 10 L22 2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+				<svg class="hero-arrow-echo" width="14" height="8" viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1 L7 7 L13 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+			</a>
+		</section>
+
+		<section class="section" id="about">
+			<div class="section-body">
+				<h2 data-reveal class="section-title">About Me</h2>
 
 				<div class="about">
-					<figure class="about-photo">
-						<!-- drop your portrait in here: <img src="media/portrait.jpg" alt="Krish Lenka"> -->
-					</figure>
-
-					<div class="about-text">
+					<div data-reveal class="about-text">
 						<p>Placeholder. One or two sentences on who you are and what you build — the thing
 							someone should remember thirty seconds after closing the tab.</p>
 						<p>Placeholder. What you are looking for right now, and when you are available.</p>
 						<p>Placeholder. One line that is not about work.</p>
+					</div>
 
-						<div class="skills">
-							<div class="skill-group">
-								<span class="skill-label">Languages</span>
-								<ul class="pills">
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-								</ul>
-							</div>
-							<div class="skill-group">
-								<span class="skill-label">Frameworks</span>
-								<ul class="pills">
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-								</ul>
-							</div>
-							<div class="skill-group">
-								<span class="skill-label">Data &amp; AI</span>
-								<ul class="pills">
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-								</ul>
-							</div>
-							<div class="skill-group">
-								<span class="skill-label">Tools</span>
-								<ul class="pills">
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-									<li class="pill">Placeholder</li>
-								</ul>
-							</div>
+					<div class="skills">
+						<div data-reveal class="skill-group">
+							<span class="skill-label">Languages</span>
+							<ul class="pills">
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+							</ul>
+						</div>
+						<div data-reveal class="skill-group">
+							<span class="skill-label">Frameworks</span>
+							<ul class="pills">
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+							</ul>
+						</div>
+						<div data-reveal class="skill-group">
+							<span class="skill-label">Data &amp; AI</span>
+							<ul class="pills">
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+							</ul>
+						</div>
+						<div data-reveal class="skill-group">
+							<span class="skill-label">Tools</span>
+							<ul class="pills">
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+								<li class="pill">Placeholder</li>
+							</ul>
 						</div>
 					</div>
-				</div>
-
-				<div class="about-cta">
-					<a class="btn btn--lg btn--primary" href="/Krish_Lenka_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
-				</div>
-			</div>
-		</section>
-
-		<section class="section" id="projects">
-			<hr class="grid-rule">
-			<div class="section-body section-body--wide">
-				<h2 class="display display--section">PROJECTS</h2>
-
-				<div class="card-grid">
-
-					<article class="card">
-						<h3 class="card-title">
-							<button class="card-open" type="button" data-project="project-learntrack" aria-haspopup="dialog">LearnTrack</button>
-						</h3>
-						<p class="card-date">Feb 2025 - Apr 2025</p>
-						<div class="card-thumb">
-							<video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" muted loop playsinline preload="none" aria-hidden="true"></video>
-						</div>
-						<p class="card-desc">An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.</p>
-						<ul class="pills card-tags">
-							<li class="pill">Tool One</li>
-							<li class="pill">Tool Two</li>
-							<li class="pill">Tool Three</li>
-							<li class="pill">Tool Four</li>
-						</ul>
-					</article>
-
-					<article class="card">
-						<h3 class="card-title">
-							<button class="card-open" type="button" data-project="project-two" aria-haspopup="dialog">Project Title</button>
-						</h3>
-						<p class="card-date">Aug 2026 - Present</p>
-						<div class="card-thumb"></div>
-						<p class="card-desc">Short description of project.</p>
-						<ul class="pills card-tags">
-							<li class="pill">Tool One</li>
-							<li class="pill">Tool Two</li>
-							<li class="pill">Tool Three</li>
-							<li class="pill">Tool Four</li>
-						</ul>
-					</article>
-
-					<article class="card">
-						<h3 class="card-title">
-							<button class="card-open" type="button" data-project="project-three" aria-haspopup="dialog">Project Title</button>
-						</h3>
-						<p class="card-date">Aug 2026 - Present</p>
-						<div class="card-thumb"></div>
-						<p class="card-desc">Short description of project.</p>
-						<ul class="pills card-tags">
-							<li class="pill">Tool One</li>
-							<li class="pill">Tool Two</li>
-							<li class="pill">Tool Three</li>
-							<li class="pill">Tool Four</li>
-						</ul>
-					</article>
-
 				</div>
 			</div>
 		</section>
 
 		<section class="section" id="experience">
-			<hr class="grid-rule">
-			<div class="section-body section-body--wide">
-				<h2 class="display display--section">EXPERIENCE</h2>
+			<div class="section-body">
+				<h2 data-reveal class="section-title">Experience</h2>
 
 				<ol class="timeline">
-					<li class="tl-era">
+					<li data-reveal class="tl-era">
 						<p class="tl-when">2025 &ndash; Present</p>
 						<div class="tl-items">
 							<article class="tl-item tl-entry">
@@ -194,7 +148,7 @@
 							</article>
 						</div>
 					</li>
-					<li class="tl-era">
+					<li data-reveal class="tl-era">
 						<p class="tl-when">2025</p>
 						<div class="tl-items">
 							<details class="disclosure tl-collapse">
@@ -220,7 +174,7 @@
 							</details>
 						</div>
 					</li>
-					<li class="tl-era">
+					<li data-reveal class="tl-era">
 						<p class="tl-when">2023 &ndash; 2024</p>
 						<div class="tl-items">
 							<details class="disclosure tl-collapse">
@@ -248,10 +202,10 @@
 					</li>
 				</ol>
 
-				<details class="disclosure tl-older">
+				<details data-reveal class="disclosure tl-older">
 					<summary>Older experience <svg class="chev" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></summary>
 					<div class="tl-older-body">
-						<ol class="timeline" style="margin-top:0">
+						<ol class="timeline">
 							<li class="tl-era">
 								<p class="tl-when">2022</p>
 								<div class="tl-items">
@@ -310,12 +264,68 @@
 			</div>
 		</section>
 
-		<section class="section" id="contact">
-			<hr class="grid-rule">
-			<div class="section-body section-body--wide">
-				<h2 class="display display--section">CONTACT</h2>
+		<section class="section" id="projects">
+			<div class="section-body">
+				<h2 data-reveal class="section-title">Projects</h2>
 
-				<ul class="contact-list">
+				<div class="card-grid">
+
+					<article data-reveal class="card">
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="project-learntrack" aria-haspopup="dialog">LearnTrack</button>
+						</h3>
+						<p class="card-date">Feb 2025 - Apr 2025</p>
+						<div class="card-thumb">
+							<video src="media/LearnTrackDemo.mp4" poster="media/LearnTrack.png" muted loop playsinline preload="none" aria-hidden="true"></video>
+						</div>
+						<p class="card-desc">An AI-powered mobile app that creates structured learning paths, tracks your progress, and keeps your learning focused in one place.</p>
+						<ul class="pills card-tags">
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
+						</ul>
+					</article>
+
+					<article data-reveal class="card">
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="project-two" aria-haspopup="dialog">Project Title</button>
+						</h3>
+						<p class="card-date">Aug 2026 - Present</p>
+						<div class="card-thumb"></div>
+						<p class="card-desc">Short description of project.</p>
+						<ul class="pills card-tags">
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
+						</ul>
+					</article>
+
+					<article data-reveal class="card">
+						<h3 class="card-title">
+							<button class="card-open" type="button" data-project="project-three" aria-haspopup="dialog">Project Title</button>
+						</h3>
+						<p class="card-date">Aug 2026 - Present</p>
+						<div class="card-thumb"></div>
+						<p class="card-desc">Short description of project.</p>
+						<ul class="pills card-tags">
+							<li class="pill">Tool One</li>
+							<li class="pill">Tool Two</li>
+							<li class="pill">Tool Three</li>
+							<li class="pill">Tool Four</li>
+						</ul>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="contact">
+			<div class="section-body">
+				<h2 data-reveal class="section-title">Contact</h2>
+
+				<ul data-reveal class="contact-list">
 					<li>
 						<!-- the address is assembled from these two parts at click time, so it
 						     never appears as a complete string anywhere in the markup -->
